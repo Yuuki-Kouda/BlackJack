@@ -36,7 +36,7 @@ namespace BrackJack
 		/// </summary>
 		public void DrawCard(Card card)
 		{
-			this.IsBust = this.Hand.AddCard(card);
+			IsBust = Hand.AddCard(card);
 		}
 	}
 }

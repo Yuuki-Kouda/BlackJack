@@ -18,7 +18,7 @@ namespace BrackJack
 		/// <summary>
 		/// 点数
 		/// </summary>
-		public int Points { get; set; }
+		public int Points { get; set; } = 0;
 		/// <summary>
 		/// 手札にAの有無
 		/// </summary>
@@ -31,7 +31,6 @@ namespace BrackJack
 		{
 			List<Card> cards = new List<Card>();
 			this.HandCards = cards;
-			this.Points = 0;
 
 		}
 
@@ -41,12 +40,12 @@ namespace BrackJack
 		/// <param name="card"></param>
 		public bool AddCard(Card card)
 		{
-			this.HandCards.Add(card);
-			this.Points += ReturnConvertedNumber(card);
-			if (this.Points > 21) return true;
+			HandCards.Add(card);
+			var convetedNumberPoint = ReturnConvertedNumber(card);
+			Points += convetedNumberPoint;
+			if (Points > 21) return true;
 
 			return false;
-
 		}
 
 		/// <summary>
@@ -60,7 +59,7 @@ namespace BrackJack
 
 			convertedNumber = ReturnConvetedJQK(card);
 
-			if ((this.HaveA != HaveA.None) || (card.DisplayNumber == "A"))
+			if ((HaveA != HaveA.None) || (card.DisplayNumber == "A"))
 			{
 				convertedNumber = ReturnConvetedAAndRecalucatePoints(convertedNumber, card);
 			}
@@ -86,16 +85,16 @@ namespace BrackJack
 		/// <summary>
 		/// Aを変換して返し、点数を計算する
 		/// </summary>
-		private int ReturnConvetedAAndRecalucatePoints(int cardNumber, Card card)
+		public int ReturnConvetedAAndRecalucatePoints(int cardNumber, Card card)
 		{
-			var points = this.Points;
+			var points = Points;
 
 			if (card.DisplayNumber == "A")
 			{
 				switch (HaveA)
 				{
 					case (HaveA.None):
-						if ((points + 11) > 21) this.HaveA = HaveA.Have;
+						if ((points + 11) > 21) HaveA = HaveA.Have;
 						else
 						{
 							HaveA = HaveA.AddPoint;
@@ -109,18 +108,18 @@ namespace BrackJack
 					case (HaveA.AddPoint):
 						if ((points + 1) > 21)
 						{
-							this.HaveA = HaveA.Have;
-							this.Points -= 10;
+							HaveA = HaveA.Have;
+							Points -= 10;
 						}
 						break;
 				}
 			}
 			else
 			{
-				if ((this.HaveA == HaveA.AddPoint) && ((points + cardNumber) > 21))
+				if ((HaveA == HaveA.AddPoint) && ((points + cardNumber) > 21))
 				{
-					this.HaveA = HaveA.Have;
-					this.Points -= 10;
+					HaveA = HaveA.Have;
+					Points -= 10;
 				}
 			}
 			return cardNumber;
