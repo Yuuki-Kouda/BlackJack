@@ -1,7 +1,4 @@
-﻿using System;
-using static System.Console;
-
-namespace BrackJack
+﻿namespace BrackJack
 {
 	class Program
 	{
@@ -9,6 +6,7 @@ namespace BrackJack
 		{
 
 			var isRestartGame = true;
+			//trueの場合、再ゲーム
 			while (isRestartGame)
 			{
 				//生成

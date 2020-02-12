@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Console;
+﻿using static System.Console;
 
 namespace BrackJack
 {
+	/// <summary>
+	/// 勝敗
+	/// </summary>
 	enum Result
 	{
 		Win,
@@ -31,6 +31,12 @@ namespace BrackJack
 		/// </summary>
 		bool IsRestartGame { get; set; } = false;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="player"></param>
+		/// <param name="dealer"></param>
+		/// <param name="deck"></param>
 		public Game(Player player, Player dealer, Deck deck)
 		{
 			Player = player;

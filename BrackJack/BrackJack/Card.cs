@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BrackJack
+﻿namespace BrackJack
 {
 	/// <summary>
 	/// スート
@@ -23,7 +19,7 @@ namespace BrackJack
 		/// <summary>
 		/// 数字
 		/// </summary>
-		public int Number { get; set; }
+		public int Number { get; }
 		/// <summary>
 		/// 数字（表示用）
 		/// </summary>
