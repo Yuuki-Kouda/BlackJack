@@ -1,4 +1,9 @@
-﻿using static System.Console;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Console;
 
 namespace BrackJack
 {
@@ -10,6 +15,15 @@ namespace BrackJack
 		Win,
 		Lose,
 		Draw
+	}
+	/// <summary>
+	/// どのプレイヤーか
+	/// </summary>
+	enum WhichPlayer
+	{
+		Player,
+		FirstDrawDealer,
+		Dealer
 	}
 
 	class Game
@@ -30,6 +44,11 @@ namespace BrackJack
 		/// リスタート有無
 		/// </summary>
 		bool IsRestartGame { get; set; } = false;
+		/// <summary>
+		/// バースト有無
+		/// </summary>
+		public bool IsBust { get; set; } = false;
+
 
 		/// <summary>
 		/// コンストラクタ
@@ -55,17 +74,17 @@ namespace BrackJack
 			Dealer.DrawCard(Deck.DrawnCard());
 
 			//表示
-			Player.ShowPointsAndHand(false, Players.Player);
-			Dealer.ShowPointsAndHand(true, Players.Dealer);
+			ShowPointsAndHand(WhichPlayer.Player);
+			ShowPointsAndHand(WhichPlayer.FirstDrawDealer);
 
 			//プレイヤーターン
 			var isPlayerHit = ReturnIsPlayerHit();
-			while(isPlayerHit)
+			while (isPlayerHit)
 			{
 				Player.DrawCard(Deck.DrawnCard());
 
-				Player.ShowPointsAndHand(false, Players.Player);
-				Dealer.ShowPointsAndHand(true, Players.Dealer);
+				ShowPointsAndHand(WhichPlayer.Player);
+				ShowPointsAndHand(WhichPlayer.FirstDrawDealer);
 
 				if (!Player.IsBust)
 				{
@@ -77,8 +96,8 @@ namespace BrackJack
 			//バースト
 			if (Player.IsBust)
 			{
-				Player.ShowBustMessage(Players.Player);
-				Dealer.ShowResultMessage(Players.Dealer, Players.Player, false);
+				ShowBustMessage(nameof(Players.Player));
+				ShowResultMessage(Result.Lose);
 
 				SetIsRestartGame();
 				return IsRestartGame;
@@ -86,35 +105,35 @@ namespace BrackJack
 			//ディーラーターン
 			else
 			{
-				while (Dealer.Points < 17)
+				while (Dealer.Hand.Points < 17)
 					Dealer.DrawCard(Deck.DrawnCard());
 				if (Dealer.IsBust)
 				{
-					Player.ShowPointsAndHand(false, Players.Player);
-					Dealer.ShowPointsAndHand(false, Players.Dealer);
+					ShowPointsAndHand(WhichPlayer.Player);
+					ShowPointsAndHand(WhichPlayer.Dealer);
 
-					Dealer.ShowBustMessage(Players.Dealer);
-					Player.ShowResultMessage(Players.Player, Players.Dealer, false);
+					ShowBustMessage(nameof(Players.Dealer));
+					ShowResultMessage(Result.Win);
 
 					SetIsRestartGame();
 					return IsRestartGame;
 				}
 			}
-				//勝負
-				Player.ShowPointsAndHand(false, Players.Player);
-				Dealer.ShowPointsAndHand(false, Players.Dealer);
+			//勝負
+			ShowPointsAndHand(WhichPlayer.Player);
+			ShowPointsAndHand(WhichPlayer.Dealer);
 
-				var result = ReturnResult();
-				ShowResultMessage(result);
+			var result = ReturnResult();
+			ShowResultMessage(result);
 
-				SetIsRestartGame();
-				return IsRestartGame;		
+			SetIsRestartGame();
+			return IsRestartGame;
 		}
 
 		/// <summary>
 		/// 開始メッセージ出力
 		/// </summary>
-		public void ShowStartMessage()
+		private void ShowStartMessage()
 		{
 			WriteLine("ブラックジャックゲームへようこそ");
 			WriteLine();
@@ -178,13 +197,23 @@ namespace BrackJack
 		/// <returns></returns>
 		private Result ReturnResult()
 		{
-			if (Player.Points > Dealer.Points) return Result.Win;
-			else if (Player.Points < Dealer.Points) return Result.Lose;
+			if (Player.Hand.Points > Dealer.Hand.Points) return Result.Win;
+			else if (Player.Hand.Points < Dealer.Hand.Points) return Result.Lose;
 			else return Result.Draw;
 		}
 
 		/// <summary>
-		/// 勝敗メッセージ出力
+		/// バーストメッセージ
+		/// </summary>
+		/// <param name="user"></param>
+		private void ShowBustMessage(string player)
+		{
+			WriteLine($"{player}はバーストしました。");
+			return;
+		}
+
+		/// <summary>
+		/// 勝者、敗者メッセージ
 		/// </summary>
 		/// <param name="result"></param>
 		private void ShowResultMessage(Result result)
@@ -194,15 +223,63 @@ namespace BrackJack
 				case Result.Win:
 					WriteLine("Playerが勝利しました。Dealerの負けです。");
 					break;
-
 				case Result.Lose:
 					WriteLine("Dealerが勝利しました。Playerの負けです。");
 					break;
-
 				case Result.Draw:
 					WriteLine("引き分けです。");
 					break;
 			}
+			return;
+		}
+
+		/// <summary>
+		/// 点数と手札表示
+		/// </summary>
+		private void ShowPointsAndHand(WhichPlayer player)
+		{
+			int totalPoints = new int();
+			List<Card> playerHand = new List<Card>();
+
+			switch (player)
+			{
+				case WhichPlayer.Player:
+
+					Write("Player: ");
+					totalPoints = Player.Hand.Points;
+					playerHand = Player.Hand.HandCards;
+
+					break;
+
+				case WhichPlayer.FirstDrawDealer:
+
+					Write("Dealer: ");
+					var points = this.Dealer.Hand.Points;
+					if ((this.Dealer.Hand.HandCards[0].DisplayNumber != "A") && (this.Dealer.Hand.HandCards[1].DisplayNumber == "A"))
+						totalPoints = points - 11;
+					else if (this.Dealer.Hand.HandCards[0].DisplayNumber == "A")
+						totalPoints = 11;
+					else
+						totalPoints = this.Dealer.Hand.ReturnConvetedJQK(this.Dealer.Hand.HandCards[0]);
+
+					playerHand.Add(this.Dealer.Hand.HandCards[0]);
+
+					break;
+
+				case WhichPlayer.Dealer:
+					Write("Dealer: ");
+					totalPoints = Dealer.Hand.Points;
+					playerHand = Dealer.Hand.HandCards;
+					break;
+			}
+			Write($" Total:{totalPoints} ");
+
+			foreach (var card in playerHand)
+			{
+				Write($"[{card.Mark} {card.DisplayNumber}]");
+			}
+			WriteLine();
+			return;
 		}
 	}
 }
