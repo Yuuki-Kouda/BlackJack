@@ -15,14 +15,6 @@ namespace BlackJack
 		List<Card> DeckList { get; set; }
 
 		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		public Deck()
-		{
-			InitializeDeckList();
-		}
-
-		/// <summary>
 		/// トランプ生成
 		/// </summary>
 		/// <param name="mark"></param>
