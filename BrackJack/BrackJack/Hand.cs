@@ -23,6 +23,10 @@ namespace BrackJack
 		/// 手札にAの有無
 		/// </summary>
 		private HaveA HaveA { get; set; } = HaveA.None;
+		/// <summary>
+		/// Aを11としたときに点数が21を超えているか
+		/// </summary>
+		private bool IsOverFlowByA { get; set; } = false;
 
 		/// <summary>
 		/// コンストラクタ
@@ -31,7 +35,6 @@ namespace BrackJack
 		{
 			List<Card> cards = new List<Card>();
 			this.HandCards = cards;
-
 		}
 
 		/// <summary>
@@ -42,7 +45,7 @@ namespace BrackJack
 		{
 			HandCards.Add(card);
 			var convetedNumberPoint = ReturnConvertedNumber(card);
-			Points += convetedNumberPoint;
+			CaluculatePoints(convetedNumberPoint);
 			if (Points > 21) return true;
 
 			return false;
@@ -66,6 +69,22 @@ namespace BrackJack
 
 			return convertedNumber;
 		}
+		/// <summary>
+		/// 点数計算処理
+		/// </summary>
+		/// <param name="convetedNumberPoint"></param>
+		private void CaluculatePoints(int convetedNumberPoint)
+		{
+			if (IsOverFlowByA)
+			{
+				Points -= 10;
+				Points += convetedNumberPoint;
+				IsOverFlowByA = false;
+			}
+			else Points += convetedNumberPoint;
+
+			return;
+		}
 
 		/// <summary>
 		/// JQKを変換して返す
@@ -83,7 +102,7 @@ namespace BrackJack
 		}
 
 		/// <summary>
-		/// Aを変換して返し、点数を計算する
+		/// Aを変換して返す
 		/// </summary>
 		public int ReturnConvetedAAndRecalucatePoints(int cardNumber, Card card)
 		{
@@ -109,7 +128,7 @@ namespace BrackJack
 						if ((points + 1) > 21)
 						{
 							HaveA = HaveA.Have;
-							Points -= 10;
+							IsOverFlowByA = true;
 						}
 						break;
 				}
@@ -119,7 +138,7 @@ namespace BrackJack
 				if ((HaveA == HaveA.AddPoint) && ((points + cardNumber) > 21))
 				{
 					HaveA = HaveA.Have;
-					Points -= 10;
+					IsOverFlowByA = true;
 				}
 			}
 
