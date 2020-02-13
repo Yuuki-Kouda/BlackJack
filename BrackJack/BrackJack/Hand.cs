@@ -46,6 +46,8 @@ namespace BrackJack
 			HandCards.Add(card);
 			var convetedNumberPoint = ReturnConvertedNumber(card);
 			CaluculatePoints(convetedNumberPoint);
+			ConvertBrackJackNumber();
+			CaluculatePoints();
 			if (Points > 21) return true;
 
 			return false;
@@ -53,18 +55,27 @@ namespace BrackJack
 
 		/// <summary>
 		/// 点数変換
+		/// 点数の変換
 		/// </summary>
 		/// <param name="card"></param>
 		/// <returns></returns>
 		private int ReturnConvertedNumber(Card card)
+		private void ConvertBrackJackNumber()
 		{
 			var convertedNumber = card.Number;
 
 			convertedNumber = ReturnConvetedJQK(card);
 
 			if ((HaveA != HaveA.None) || (card.DisplayNumber == "A"))
+			var handCards = HandCards;
+			int points = new int();
+			var i = 0;
+			foreach (var card in HandCards)
 			{
 				convertedNumber = ReturnConvetedAAndRecalucatePoints(convertedNumber, card);
+				if (card.DisplayNumber == "A")
+					break;
+				i++;
 			}
 
 			return convertedNumber;
@@ -76,18 +87,25 @@ namespace BrackJack
 		private void CaluculatePoints(int convetedNumberPoint)
 		{
 			if (IsOverFlowByA)
+			handCards.RemoveAt(i);
+			foreach(var card in handCards)
 			{
 				Points -= 10;
 				Points += convetedNumberPoint;
 				IsOverFlowByA = false;
+				points += card.BlackJackNumber;
 			}
 			else Points += convetedNumberPoint;
 
 			return;
+			if (((11 > points) && (HandCards[i].BlackJackNumber == 11)) ||
+				((11 <= points) && (HandCards[i].BlackJackNumber == 1))) 
+				HandCards[i].ConvertA();
 		}
 
 		/// <summary>
 		/// JQKを変換して返す
+		/// 点数計算
 		/// </summary>
 		/// <param name="card"></param>
 		/// <returns></returns>
@@ -105,8 +123,10 @@ namespace BrackJack
 		/// Aを変換して返す
 		/// </summary>
 		public int ReturnConvetedAAndRecalucatePoints(int cardNumber, Card card)
+		private void CaluculatePoints()
 		{
 			var points = Points;
+			InitializePoints();
 
 			if (card.DisplayNumber == "A")
 			{
@@ -134,15 +154,21 @@ namespace BrackJack
 				}
 			}
 			else
+			foreach(var card in HandCards)
 			{
 				if ((HaveA == HaveA.AddPoint) && ((points + cardNumber) > 21))
 				{
 					HaveA = HaveA.Have;
 					IsOverFlowByA = true;
 				}
+				Points += card.BlackJackNumber;
 			}
+		}
 
 			return cardNumber;
+		private void InitializePoints()
+		{
+			Points = 0;
 		}
 	}
 }
