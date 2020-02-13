@@ -91,22 +91,23 @@ namespace BlackJack
 				return IsRestartGame;
 			}
 			//ディーラーターン
-			else
-			{
-				while (Dealer.Hand.Points < 17)
-					Dealer.DrawCard(Deck.DrawnCard());
-				if (Dealer.IsBust)
+			var continueDraw = true;
+				while (continueDraw)
 				{
-					ShowPointsAndHand(false, Player.Hand, nameof(Player));
-					ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+					continueDraw = Dealer.IsDrawDealerOverFlow17(Deck.DrawnCard(), Dealer.Hand.Points);
+					if (Dealer.IsBust)
+					{
+						ShowPointsAndHand(false, Player.Hand, nameof(Player));
+						ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
 
-					ShowBustMessage(nameof(Dealer));
-					ShowResultMessage(Result.Win);
+						ShowBustMessage(nameof(Dealer));
+						ShowResultMessage(Result.Win);
 
-					SetIsRestartGame();
-					return IsRestartGame;
+						SetIsRestartGame();
+						return IsRestartGame;
+					}
 				}
-			}
+
 			//勝負
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
 			ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
@@ -243,20 +244,11 @@ namespace BlackJack
 			}
 			else
 			{
-				if ((playersHand.HandCards[0].DisplayNumber != "A") && (playersHand.HandCards[1].DisplayNumber == "A"))
-				{
-					Write($" Total:{playersHand.Points - 11} ");
-				}
-				else if (playersHand.HandCards[0].DisplayNumber == "A")
-				{
-					Write($" Total:11 ");
-				}
-				else
-				{
-					Write($" Total:{playersHand.ReturnConvetedJQK(playersHand.HandCards[0])} ");
-				}
+				Write($" Total:{playersHand.HandCards[0].BlackJackNumber} ");
 
-				WriteLine($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
+				Write($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
+				WriteLine();
+
 			}
 
 			return;
