@@ -1,11 +1,11 @@
-﻿namespace BrackJack
+﻿namespace BlackJack
 {
 	/// <summary>
 	/// スート
 	/// </summary>
 	public enum Suit
 	{
-		Hart,
+		Heart,
 		Spade,
 		Diamond,
 		Club

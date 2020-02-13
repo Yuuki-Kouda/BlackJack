@@ -1,6 +1,6 @@
 ﻿using static System.Console;
 
-namespace BrackJack
+namespace BlackJack
 {
 	/// <summary>
 	/// 勝敗

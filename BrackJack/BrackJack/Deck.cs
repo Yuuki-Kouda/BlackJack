@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BrackJack
+namespace BlackJack
 {
 	/// <summary>
 	/// 山札クラス

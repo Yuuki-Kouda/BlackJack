@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BrackJack
+namespace BlackJack
 {
 	enum HaveA
 	{

@@ -1,4 +1,4 @@
-﻿namespace BrackJack
+﻿namespace BlackJack
 {
 	/// <summary>
 	/// プレイヤー
