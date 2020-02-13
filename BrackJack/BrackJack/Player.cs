@@ -1,6 +1,4 @@
-﻿using static System.Console;
-
-namespace BrackJack
+﻿namespace BrackJack
 {
 	enum Players
 	{
