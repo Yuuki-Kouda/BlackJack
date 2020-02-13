@@ -48,9 +48,10 @@ namespace BrackJack
 				cardList.Add(CreateCard(Suit.Diamond, i));
 				cardList.Add(CreateCard(Suit.Club, i));
 			}
-
 			//シャッフル
 			DeckList = cardList.OrderBy(i => Guid.NewGuid()).ToList();
+
+			return;
 		}
 
 		/// <summary>

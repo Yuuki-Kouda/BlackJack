@@ -17,6 +17,7 @@
 
 				isRestartGame = game.Run();
 			}
+
 			return;
 		}
 	}
