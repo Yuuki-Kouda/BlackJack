@@ -46,6 +46,11 @@ namespace BlackJack
 
 		public bool Run()
 		{
+			//ゲーム初期化
+			Player.InitializeHand();
+			Dealer.InitializeHand();
+			Deck.InitializeDeckList();
+
 			ShowStartMessage();
 
 			//開始ドロー

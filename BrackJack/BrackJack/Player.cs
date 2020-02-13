@@ -8,19 +8,18 @@
 		/// <summary>
 		/// 手札
 		/// </summary>
-		public Hand Hand { get; set; }
+		public Hand Hand { get; set; } = new Hand();
 		/// <summary>
 		/// バースト有無
 		/// </summary>
 		public bool IsBust { get; set; } = false;
 
 		/// <summary>
-		/// コンストラクタ
+		/// 手札初期化
 		/// </summary>
-		public Player()
+		public void InitializeHand()
 		{
-			Hand hand = new Hand();
-			this.Hand = hand;
+			Hand = new Hand();
 		}
 
 		/// <summary>

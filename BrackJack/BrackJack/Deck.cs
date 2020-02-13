@@ -29,13 +29,13 @@ namespace BlackJack
 		/// <summary>
 		/// 山札初期化
 		/// </summary>
-		private void InitializeDeckList()
+		public void InitializeDeckList()
 		{
 			List<Card> cardList = new List<Card>();
 
 			for (int i = 1; i <= 13; i++)
 			{
-				cardList.Add(CreateCard(Suit.Hart, i));
+				cardList.Add(CreateCard(Suit.Heart, i));
 				cardList.Add(CreateCard(Suit.Spade, i));
 				cardList.Add(CreateCard(Suit.Diamond, i));
 				cardList.Add(CreateCard(Suit.Club, i));
