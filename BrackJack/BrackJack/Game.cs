@@ -11,15 +11,6 @@ namespace BrackJack
 		Lose,
 		Draw
 	}
-	/// <summary>
-	/// どのプレイヤーか
-	/// </summary>
-	enum WhichPlayer
-	{
-		Player,
-		FirstDrawDealer,
-		Dealer
-	}
 
 	class Game
 	{
@@ -64,8 +55,6 @@ namespace BrackJack
 			Dealer.DrawCard(Deck.DrawnCard());
 
 			//表示
-			//ShowPointsAndHand(WhichPlayer.Player);
-			//ShowPointsAndHand(WhichPlayer.FirstDrawDealer);
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
 			ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
@@ -75,8 +64,6 @@ namespace BrackJack
 			{
 				Player.DrawCard(Deck.DrawnCard());
 
-				//ShowPointsAndHand(WhichPlayer.Player);
-				//ShowPointsAndHand(WhichPlayer.FirstDrawDealer);
 				ShowPointsAndHand(false, Player.Hand, nameof(Player));
 				ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
@@ -103,10 +90,8 @@ namespace BrackJack
 					Dealer.DrawCard(Deck.DrawnCard());
 				if (Dealer.IsBust)
 				{
-					//ShowPointsAndHand(WhichPlayer.Player);
-					//ShowPointsAndHand(WhichPlayer.Dealer);
-					ShowPointsAndHand(false, Player.Hand, nameof(Player));
-					ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+					ShowPointsAndHand(false, Player.Hand, nameof(Players.Player));
+					ShowPointsAndHand(false, Dealer.Hand, nameof(Players.Dealer));
 
 					ShowBustMessage(nameof(Players.Dealer));
 					ShowResultMessage(Result.Win);
@@ -116,10 +101,8 @@ namespace BrackJack
 				}
 			}
 			//勝負
-			//ShowPointsAndHand(WhichPlayer.Player);
-			//ShowPointsAndHand(WhichPlayer.Dealer);
-			ShowPointsAndHand(false, Player.Hand, nameof(Player));
-			ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+			ShowPointsAndHand(false, Player.Hand, nameof(Players.Player));
+			ShowPointsAndHand(false, Dealer.Hand, nameof(Players.Dealer));
 
 			var result = ReturnResult();
 			ShowResultMessage(result);
@@ -232,53 +215,6 @@ namespace BrackJack
 			return;
 		}
 
-		/// <summary>
-		/// 点数と手札表示
-		/// </summary>
-		//private void ShowPointsAndHand(WhichPlayer player)
-		//{
-		//	int totalPoints = new int();
-		//	List<Card> playerHand = new List<Card>();
-
-		//	switch (player)
-		//	{
-		//		case WhichPlayer.Player:
-		//			Write("Player: ");
-		//			totalPoints = Player.Hand.Points;
-		//			playerHand = Player.Hand.HandCards;
-
-		//			break;
-
-		//		case WhichPlayer.FirstDrawDealer:
-
-		//			Write("Dealer: ");
-		//			var points = this.Dealer.Hand.Points;
-		//			if ((this.Dealer.Hand.HandCards[0].DisplayNumber != "A") && (this.Dealer.Hand.HandCards[1].DisplayNumber == "A"))
-		//				totalPoints = points - 11;
-		//			else if (this.Dealer.Hand.HandCards[0].DisplayNumber == "A")
-		//				totalPoints = 11;
-		//			else
-		//				totalPoints = this.Dealer.Hand.ReturnConvetedJQK(this.Dealer.Hand.HandCards[0]);
-
-		//			playerHand.Add(this.Dealer.Hand.HandCards[0]);
-
-		//			break;
-
-		//		case WhichPlayer.Dealer:
-		//			Write("Dealer: ");
-		//			totalPoints = Dealer.Hand.Points;
-		//			playerHand = Dealer.Hand.HandCards;
-		//			break;
-		//	}
-		//	Write($" Total:{totalPoints} ");
-
-		//	foreach (var card in playerHand)
-		//	{
-		//		Write($"[{card.Mark} {card.DisplayNumber}]");
-		//	}
-		//	WriteLine();
-		//	return;
-		//}
 		/// <summary>
 		/// 点数と手札表示
 		/// </summary>
