@@ -21,7 +21,7 @@ namespace BlackJack
 		/// <summary>
 		/// ディーラー
 		/// </summary>
-		Player Dealer { get; set; }
+		Dealer Dealer { get; set; }
 		/// <summary>
 		/// 山札
 		/// </summary>
@@ -37,7 +37,7 @@ namespace BlackJack
 		/// <param name="player"></param>
 		/// <param name="dealer"></param>
 		/// <param name="deck"></param>
-		public Game(Player player, Player dealer, Deck deck)
+		public Game(Player player, Dealer dealer, Deck deck)
 		{
 			this.Player = player;
 			this.Dealer = dealer;
