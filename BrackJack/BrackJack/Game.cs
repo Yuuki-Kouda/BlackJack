@@ -63,8 +63,10 @@ namespace BlackJack
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
 			ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
+			var inputKey = ShowHitOrStandMessageAndReturnInputKey();
 			//プレイヤーターン
-			var isPlayerHit = ReturnIsPlayerHit();
+
+			var isPlayerHit = ReturnInputKey();
 			while (isPlayerHit)
 			{
 				Player.DrawCard(Deck.DrawnCard());
@@ -74,7 +76,7 @@ namespace BlackJack
 
 				if (!Player.IsBust)
 				{
-					isPlayerHit = ReturnIsPlayerHit();
+					isPlayerHit = ReturnInputKey();
 				}
 				else break;
 			}
@@ -125,24 +127,26 @@ namespace BlackJack
 			WriteLine();
 		}
 
-		/// <summary>
-		/// プレイヤーヒット有無を返す
-		/// </summary>
-		private bool ReturnIsPlayerHit()
+		private string ShowHitOrStandMessageAndReturnInputKey()
 		{
-			var isPlayerHit = false;
-			var ShowText = "ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ";
-
 			WriteLine();
-			Write(ShowText);
+			Write("ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ");
 			var inputKey = ReadLine();
 			WriteLine();
 
+			return inputKey;
+		}
+		/// <summary>
+		/// プレイヤーヒット有無を返す
+		/// </summary>
+		private bool ReturnInputKey()
+		{
+			var isPlayerHit = false;
+			var inputKey = ShowHitOrStandMessageAndReturnInputKey();
+
 			while (!(inputKey == "h" || inputKey == "s"))
 			{
-				Write(ShowText);
-				inputKey = ReadLine();
-				WriteLine();
+				inputKey = ShowHitOrStandMessageAndReturnInputKey();
 			}
 
 			if (inputKey == "h") isPlayerHit = true;
