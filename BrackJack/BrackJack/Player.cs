@@ -1,11 +1,5 @@
 ﻿namespace BrackJack
 {
-	enum Players
-	{
-		Player,
-		Dealer
-	}
-
 	/// <summary>
 	/// プレイヤー
 	/// </summary>

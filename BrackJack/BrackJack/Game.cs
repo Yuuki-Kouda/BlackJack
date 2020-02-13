@@ -77,7 +77,7 @@ namespace BrackJack
 			//バースト
 			if (Player.IsBust)
 			{
-				ShowBustMessage(nameof(Players.Player));
+				ShowBustMessage(nameof(Player));
 				ShowResultMessage(Result.Lose);
 
 				SetIsRestartGame();
@@ -90,10 +90,10 @@ namespace BrackJack
 					Dealer.DrawCard(Deck.DrawnCard());
 				if (Dealer.IsBust)
 				{
-					ShowPointsAndHand(false, Player.Hand, nameof(Players.Player));
-					ShowPointsAndHand(false, Dealer.Hand, nameof(Players.Dealer));
+					ShowPointsAndHand(false, Player.Hand, nameof(Player));
+					ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
 
-					ShowBustMessage(nameof(Players.Dealer));
+					ShowBustMessage(nameof(Dealer));
 					ShowResultMessage(Result.Win);
 
 					SetIsRestartGame();
@@ -101,8 +101,8 @@ namespace BrackJack
 				}
 			}
 			//勝負
-			ShowPointsAndHand(false, Player.Hand, nameof(Players.Player));
-			ShowPointsAndHand(false, Dealer.Hand, nameof(Players.Dealer));
+			ShowPointsAndHand(false, Player.Hand, nameof(Player));
+			ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
 
 			var result = ReturnResult();
 			ShowResultMessage(result);
