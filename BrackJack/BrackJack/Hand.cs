@@ -122,6 +122,7 @@ namespace BrackJack
 					Points -= 10;
 				}
 			}
+
 			return cardNumber;
 		}
 	}

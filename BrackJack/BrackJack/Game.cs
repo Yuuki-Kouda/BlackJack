@@ -188,9 +188,9 @@ namespace BrackJack
 
 			//ゲーム終了
 			if (inputKey == "e") return;
-
 			//ゲームリスタート
 			IsRestartGame = true;
+
 			return;
 		}
 
@@ -233,6 +233,7 @@ namespace BrackJack
 					WriteLine("引き分けです。");
 					break;
 			}
+
 			return;
 		}
 
@@ -317,6 +318,8 @@ namespace BrackJack
 
 				WriteLine($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
 			}
+
+			return;
 		}
 	}
 }
