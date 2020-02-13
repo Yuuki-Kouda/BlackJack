@@ -75,10 +75,10 @@
 		/// Aの点数変換
 		/// </summary>
 		/// <param name="card"></param>
-		public void ConvertA(ref Card card)
+		public void ConvertA()
 		{
-			if (card.BlackJackNumber == 11) card.BlackJackNumber = 1;
-			else card.BlackJackNumber = 11;
+			if (BlackJackNumber == 11) BlackJackNumber = 1;
+			else BlackJackNumber = 11;
 		}
 	}
 }
