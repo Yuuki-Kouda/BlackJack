@@ -25,6 +25,10 @@
 		/// </summary>
 		public string DisplayNumber { get; }
 		/// <summary>
+		/// カードの点数
+		/// </summary>
+		public int BlackJackNumber { get; set; }
+		/// <summary>
 		/// トランプのマーク
 		/// </summary>
 		public Suit Mark { get; }
@@ -47,20 +51,34 @@
 
 				case 11:
 					this.DisplayNumber = "J";
+					this.BlackJackNumber = 10;
 					break;
 
 				case 12:
 					this.DisplayNumber = "Q";
+					this.BlackJackNumber = 10;
 					break;
 
 				case 13:
 					this.DisplayNumber = "K";
+					this.BlackJackNumber = 10;
 					break;
 
 				default:
 					this.DisplayNumber = number.ToString();
+					this.BlackJackNumber = number;
 					break;
 			}
+		}
+
+		/// <summary>
+		/// Aの点数変換
+		/// </summary>
+		/// <param name="card"></param>
+		public void ConvertA(ref Card card)
+		{
+			if (card.BlackJackNumber == 11) card.BlackJackNumber = 1;
+			else card.BlackJackNumber = 11;
 		}
 	}
 }
