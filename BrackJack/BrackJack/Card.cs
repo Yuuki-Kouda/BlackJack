@@ -76,10 +76,13 @@
 		/// Aの点数変換
 		/// </summary>
 		/// <param name="card"></param>
-		public void ConvertAcesBlackJackNumberIntoOneOrEleven()
+		public void SetBlackJackNumberToOneOrEleven(bool isChengedEleven)
 		{
-			if (BlackJackNumber == 11) BlackJackNumber = 1;
-			else BlackJackNumber = 11;
+			if (isChengedEleven)
+			{
+				BlackJackNumber = 11;
+			}
+			else BlackJackNumber = 1;
 		}
 	}
 }

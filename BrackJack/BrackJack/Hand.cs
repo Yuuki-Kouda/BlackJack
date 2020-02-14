@@ -40,30 +40,32 @@ namespace BlackJack
 		/// </summary>
 		public void ConvertAcesBrackJackNumber()
 		{
-			int points = 0;
+			var points = 0;
+			var hasAce = false;
+			int aceIndex = new int();
 			var i = 0;
 
 			foreach (var card in HandCards)
 			{
-				if (card.DisplayNumber == "A" && card.BlackJackNumber == 1)
+				//Aの要素番号の特定
+				if (!hasAce && card.DisplayNumber == "A")
 				{
-					foreach (var handcard in HandCards)
-					{
-						points += (handcard.BlackJackNumber);
-					}
-					if(11 <= (21 - (points - 1))) HandCards[i].ConvertAcesBlackJackNumberIntoOneOrEleven();
-					break;
+					aceIndex = i;
+					hasAce = true;
 				}
-				else if(card.DisplayNumber == "A" && card.BlackJackNumber == 11)
-				{
-					foreach (var handcard in HandCards)
-					{
-						points += (handcard.BlackJackNumber);
-					}
-					if (11 > (21 - (points - 11))) HandCards[i].ConvertAcesBlackJackNumberIntoOneOrEleven();
-					break;
-				}
+				else points += card.BlackJackNumber;
+
 				i++;
+			}
+
+			if (hasAce)
+			{
+				//Aの点数を11にする
+				if (11 <= 21 - points) HandCards[aceIndex]
+										.SetBlackJackNumberToOneOrEleven(true);
+				//Aの点数を1にする
+				else HandCards[aceIndex]
+						.SetBlackJackNumberToOneOrEleven(false);
 			}
 		}
 
