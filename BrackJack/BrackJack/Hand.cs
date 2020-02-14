@@ -30,33 +30,32 @@ namespace BlackJack
 		/// <summary>
 		/// 点数の変換
 		/// </summary>
-		private void ConvertBrackJackNumber()
+		public void ConvertBrackJackNumber()
 		{
-			var handCards = HandCards;
-			bool hasA = false;
-			int points = new int();
+			int points = 0;
 			var i = 0;
+
 			foreach (var card in HandCards)
 			{
-				if (card.DisplayNumber == "A")
+				if (card.DisplayNumber == "A" && card.BlackJackNumber == 1)
 				{
-					hasA = true;
+					foreach (var handcard in HandCards)
+					{
+						points += (handcard.BlackJackNumber);
+					}
+					if(11 <= (21 - (points - 1))) HandCards[i].ConvertA();
+					break;
+				}
+				else if(card.DisplayNumber == "A" && card.BlackJackNumber == 11)
+				{
+					foreach (var handcard in HandCards)
+					{
+						points += (handcard.BlackJackNumber);
+					}
+					if (11 > (21 - (points - 11))) HandCards[i].ConvertA();
 					break;
 				}
 				i++;
-			}
-
-			if (hasA)
-			{
-				handCards.RemoveAt(i);
-				foreach (var card in handCards)
-				{
-					points += card.BlackJackNumber;
-				}
-
-				if (((11 > points) && (HandCards[i].BlackJackNumber == 11)) ||
-					((11 <= points) && (HandCards[i].BlackJackNumber == 1)))
-					HandCards[i].ConvertA();
 			}
 		}
 
