@@ -72,7 +72,7 @@ namespace BlackJack
 				ShowPointsAndHand(false, Player.Hand, nameof(Player));
 				ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
-				if (!Player.IsBust)
+				if (!Player.Hand.IsBust)
 				{
 					isPlayerHit = ReturnInputKey();
 				}
@@ -80,7 +80,7 @@ namespace BlackJack
 			}
 
 			//バースト
-			if (Player.IsBust)
+			if (Player.Hand.IsBust)
 			{
 				ShowBustMessage(nameof(Player));
 				ShowResultMessage(Result.Lose);

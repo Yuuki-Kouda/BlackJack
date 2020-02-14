@@ -12,19 +12,27 @@ namespace BlackJack
 		/// 点数
 		/// </summary>
 		public int Points { get; set; } = 0;
+		/// <summary>
+		/// バースト有無
+		/// </summary>
+		public bool IsBust
+		{
+			get
+			{
+				if (Points > 21) return true;
+				else return false;
+			}
+		}
 
 		/// <summary>
 		/// カード追加
 		/// </summary>
 		/// <param name="card"></param>
-		public bool AddCard(Card card)
+		public void AddCard(Card card)
 		{
 			HandCards.Add(card);
 			ConvertAcesBrackJackNumber();
 			CaluculatePoints();
-			if (Points > 21) return true;
-
-			return false;
 		}
 
 		/// <summary>
