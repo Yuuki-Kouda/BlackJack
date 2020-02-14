@@ -16,11 +16,11 @@ namespace BlackJack
 		/// <returns></returns>
 		public bool IsDrawDealerOverFlow17(Card card, int points)
 		{
-			if (points >= 17) return true;
+			if (points >= 17) return false;
 			else 
 			{
 				DrawCard(card);
-				return false;
+				return true;
 			}
 		}
 	}
