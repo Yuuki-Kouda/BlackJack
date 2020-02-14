@@ -7,20 +7,11 @@ namespace BlackJack
 		/// <summary>
 		/// 手札
 		/// </summary>
-		public List<Card> HandCards { get; set; }
+		public List<Card> HandCards { get; set; } = new List<Card>();
 		/// <summary>
 		/// 点数
 		/// </summary>
 		public int Points { get; set; } = 0;
-
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		public Hand()
-		{
-			List<Card> cards = new List<Card>();
-			this.HandCards = cards;
-		}
 
 		/// <summary>
 		/// カード追加
