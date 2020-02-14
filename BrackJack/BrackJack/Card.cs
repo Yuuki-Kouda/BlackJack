@@ -76,7 +76,7 @@
 		/// Aの点数変換
 		/// </summary>
 		/// <param name="card"></param>
-		public void ConvertA()
+		public void ConvertAcesBlackJackNumberIntoOneOrEleven()
 		{
 			if (BlackJackNumber == 11) BlackJackNumber = 1;
 			else BlackJackNumber = 11;

@@ -20,7 +20,7 @@ namespace BlackJack
 		public bool AddCard(Card card)
 		{
 			HandCards.Add(card);
-			ConvertBrackJackNumber();
+			ConvertAcesBrackJackNumber();
 			CaluculatePoints();
 			if (Points > 21) return true;
 
@@ -30,7 +30,7 @@ namespace BlackJack
 		/// <summary>
 		/// 点数の変換
 		/// </summary>
-		public void ConvertBrackJackNumber()
+		public void ConvertAcesBrackJackNumber()
 		{
 			int points = 0;
 			var i = 0;
@@ -43,7 +43,7 @@ namespace BlackJack
 					{
 						points += (handcard.BlackJackNumber);
 					}
-					if(11 <= (21 - (points - 1))) HandCards[i].ConvertA();
+					if(11 <= (21 - (points - 1))) HandCards[i].ConvertAcesBlackJackNumberIntoOneOrEleven();
 					break;
 				}
 				else if(card.DisplayNumber == "A" && card.BlackJackNumber == 11)
@@ -52,7 +52,7 @@ namespace BlackJack
 					{
 						points += (handcard.BlackJackNumber);
 					}
-					if (11 > (21 - (points - 11))) HandCards[i].ConvertA();
+					if (11 > (21 - (points - 11))) HandCards[i].ConvertAcesBlackJackNumberIntoOneOrEleven();
 					break;
 				}
 				i++;
