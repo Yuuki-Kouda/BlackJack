@@ -47,6 +47,7 @@
 			{
 				case 1:
 					this.DisplayNumber = "A";
+					this.BlackJackNumber = number;
 					break;
 
 				case 11:
