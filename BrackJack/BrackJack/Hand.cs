@@ -43,19 +43,19 @@ namespace BlackJack
 			var points = 0;
 			var hasAce = false;
 			int aceIndex = new int();
-			var i = 0;
+			var handCardsIndex = 0;
 
 			foreach (var card in HandCards)
 			{
 				//Aの要素番号の特定
 				if (!hasAce && card.DisplayNumber == "A")
 				{
-					aceIndex = i;
+					aceIndex = handCardsIndex;
 					hasAce = true;
 				}
 				else points += card.BlackJackNumber;
 
-				i++;
+				handCardsIndex++;
 			}
 
 			if (hasAce)
