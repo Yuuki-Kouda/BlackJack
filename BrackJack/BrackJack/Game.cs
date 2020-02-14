@@ -180,8 +180,6 @@ namespace BlackJack
 			if (inputKey == "e") return;
 			//ゲームリスタート
 			IsRestartGame = true;
-
-			return;
 		}
 
 		/// <summary>
@@ -202,7 +200,6 @@ namespace BlackJack
 		private void ShowBustMessage(string player)
 		{
 			WriteLine($"{player}はバーストしました。");
-			return;
 		}
 
 		/// <summary>
@@ -223,8 +220,6 @@ namespace BlackJack
 					WriteLine("引き分けです。");
 					break;
 			}
-
-			return;
 		}
 
 		/// <summary>
@@ -250,10 +245,7 @@ namespace BlackJack
 
 				Write($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
 				WriteLine();
-
 			}
-
-			return;
 		}
 	}
 }
