@@ -74,7 +74,7 @@ namespace BlackJack
 
 				if (!Player.Hand.IsBust)
 				{
-					isPlayerHit = ReturnInputKey();
+					isPlayerHit = IsCheckedHit();
 				}
 				else break;
 			}
