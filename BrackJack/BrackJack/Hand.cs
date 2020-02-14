@@ -76,7 +76,7 @@ namespace BlackJack
 		{
 			InitializePoints();
 
-			foreach(var card in HandCards)
+			foreach (var card in HandCards)
 			{
 				Points += card.BlackJackNumber;
 			}
