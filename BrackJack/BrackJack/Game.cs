@@ -63,9 +63,7 @@ namespace BlackJack
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
 			ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
-			var inputKey = ShowHitOrStandMessageAndReturnInputKey();
 			//プレイヤーターン
-
 			var isPlayerHit = ReturnInputKey();
 			while (isPlayerHit)
 			{
