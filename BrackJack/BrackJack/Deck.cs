@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BrackJack
+namespace BlackJack
 {
 	/// <summary>
 	/// 山札クラス
@@ -13,14 +13,6 @@ namespace BrackJack
 		/// 山札
 		/// </summary>
 		List<Card> DeckList { get; set; }
-
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		public Deck()
-		{
-			InitializeDeckList();
-		}
 
 		/// <summary>
 		/// トランプ生成
@@ -37,13 +29,13 @@ namespace BrackJack
 		/// <summary>
 		/// 山札初期化
 		/// </summary>
-		private void InitializeDeckList()
+		public void InitializeDeckList()
 		{
 			List<Card> cardList = new List<Card>();
 
 			for (int i = 1; i <= 13; i++)
 			{
-				cardList.Add(CreateCard(Suit.Hart, i));
+				cardList.Add(CreateCard(Suit.Heart, i));
 				cardList.Add(CreateCard(Suit.Spade, i));
 				cardList.Add(CreateCard(Suit.Diamond, i));
 				cardList.Add(CreateCard(Suit.Club, i));

@@ -1,6 +1,6 @@
 ﻿using static System.Console;
 
-namespace BrackJack
+namespace BlackJack
 {
 	/// <summary>
 	/// 勝敗
@@ -21,7 +21,7 @@ namespace BrackJack
 		/// <summary>
 		/// ディーラー
 		/// </summary>
-		Player Dealer { get; set; }
+		Dealer Dealer { get; set; }
 		/// <summary>
 		/// 山札
 		/// </summary>
@@ -37,7 +37,7 @@ namespace BrackJack
 		/// <param name="player"></param>
 		/// <param name="dealer"></param>
 		/// <param name="deck"></param>
-		public Game(Player player, Player dealer, Deck deck)
+		public Game(Player player, Dealer dealer, Deck deck)
 		{
 			this.Player = player;
 			this.Dealer = dealer;
@@ -46,6 +46,11 @@ namespace BrackJack
 
 		public bool Run()
 		{
+			//ゲーム初期化
+			Player.InitializeHand();
+			Dealer.InitializeHand();
+			Deck.InitializeDeckList();
+
 			ShowStartMessage();
 
 			//開始ドロー
@@ -59,7 +64,7 @@ namespace BrackJack
 			ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
 			//プレイヤーターン
-			var isPlayerHit = ReturnIsPlayerHit();
+			var isPlayerHit = ReturnInputKey();
 			while (isPlayerHit)
 			{
 				Player.DrawCard(Deck.DrawnCard());
@@ -69,7 +74,7 @@ namespace BrackJack
 
 				if (!Player.IsBust)
 				{
-					isPlayerHit = ReturnIsPlayerHit();
+					isPlayerHit = ReturnInputKey();
 				}
 				else break;
 			}
@@ -84,22 +89,23 @@ namespace BrackJack
 				return IsRestartGame;
 			}
 			//ディーラーターン
-			else
-			{
-				while (Dealer.Hand.Points < 17)
-					Dealer.DrawCard(Deck.DrawnCard());
-				if (Dealer.IsBust)
+			var continueDraw = true;
+				while (continueDraw)
 				{
-					ShowPointsAndHand(false, Player.Hand, nameof(Player));
-					ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+					continueDraw = Dealer.IsDrawDealerOverFlow17(Deck.DrawnCard(), Dealer.Hand.Points);
+					if (Dealer.IsBust)
+					{
+						ShowPointsAndHand(false, Player.Hand, nameof(Player));
+						ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
 
-					ShowBustMessage(nameof(Dealer));
-					ShowResultMessage(Result.Win);
+						ShowBustMessage(nameof(Dealer));
+						ShowResultMessage(Result.Win);
 
-					SetIsRestartGame();
-					return IsRestartGame;
+						SetIsRestartGame();
+						return IsRestartGame;
+					}
 				}
-			}
+
 			//勝負
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
 			ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
@@ -120,24 +126,26 @@ namespace BrackJack
 			WriteLine();
 		}
 
-		/// <summary>
-		/// プレイヤーヒット有無を返す
-		/// </summary>
-		private bool ReturnIsPlayerHit()
+		private string ShowHitOrStandMessageAndReturnInputKey()
 		{
-			var isPlayerHit = false;
-			var ShowText = "ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ";
-
 			WriteLine();
-			Write(ShowText);
+			Write("ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ");
 			var inputKey = ReadLine();
 			WriteLine();
 
+			return inputKey;
+		}
+		/// <summary>
+		/// プレイヤーヒット有無を返す
+		/// </summary>
+		private bool ReturnInputKey()
+		{
+			var isPlayerHit = false;
+			var inputKey = ShowHitOrStandMessageAndReturnInputKey();
+
 			while (!(inputKey == "h" || inputKey == "s"))
 			{
-				Write(ShowText);
-				inputKey = ReadLine();
-				WriteLine();
+				inputKey = ShowHitOrStandMessageAndReturnInputKey();
 			}
 
 			if (inputKey == "h") isPlayerHit = true;
@@ -234,20 +242,11 @@ namespace BrackJack
 			}
 			else
 			{
-				if ((playersHand.HandCards[0].DisplayNumber != "A") && (playersHand.HandCards[1].DisplayNumber == "A"))
-				{
-					Write($" Total:{playersHand.Points - 11} ");
-				}
-				else if (playersHand.HandCards[0].DisplayNumber == "A")
-				{
-					Write($" Total:11 ");
-				}
-				else
-				{
-					Write($" Total:{playersHand.ReturnConvetedJQK(playersHand.HandCards[0])} ");
-				}
+				Write($" Total:{playersHand.HandCards[0].BlackJackNumber} ");
 
-				WriteLine($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
+				Write($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
+				WriteLine();
+
 			}
 
 			return;

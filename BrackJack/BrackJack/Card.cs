@@ -1,11 +1,11 @@
-﻿namespace BrackJack
+﻿namespace BlackJack
 {
 	/// <summary>
 	/// スート
 	/// </summary>
 	public enum Suit
 	{
-		Hart,
+		Heart,
 		Spade,
 		Diamond,
 		Club
@@ -25,6 +25,10 @@
 		/// </summary>
 		public string DisplayNumber { get; }
 		/// <summary>
+		/// カードの点数
+		/// </summary>
+		public int BlackJackNumber { get; set; }
+		/// <summary>
 		/// トランプのマーク
 		/// </summary>
 		public Suit Mark { get; }
@@ -43,24 +47,39 @@
 			{
 				case 1:
 					this.DisplayNumber = "A";
+					this.BlackJackNumber = number;
 					break;
 
 				case 11:
 					this.DisplayNumber = "J";
+					this.BlackJackNumber = 10;
 					break;
 
 				case 12:
 					this.DisplayNumber = "Q";
+					this.BlackJackNumber = 10;
 					break;
 
 				case 13:
 					this.DisplayNumber = "K";
+					this.BlackJackNumber = 10;
 					break;
 
 				default:
 					this.DisplayNumber = number.ToString();
+					this.BlackJackNumber = number;
 					break;
 			}
+		}
+
+		/// <summary>
+		/// Aの点数変換
+		/// </summary>
+		/// <param name="card"></param>
+		public void ConvertA()
+		{
+			if (BlackJackNumber == 11) BlackJackNumber = 1;
+			else BlackJackNumber = 11;
 		}
 	}
 }

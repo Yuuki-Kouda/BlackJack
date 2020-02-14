@@ -1,41 +1,17 @@
 ﻿using System.Collections.Generic;
 
-namespace BrackJack
+namespace BlackJack
 {
-	enum HaveA
-	{
-		None,
-		Have,
-		AddPoint
-	}
-
 	class Hand
 	{
 		/// <summary>
 		/// 手札
 		/// </summary>
-		public List<Card> HandCards { get; set; }
+		public List<Card> HandCards { get; set; } = new List<Card>();
 		/// <summary>
 		/// 点数
 		/// </summary>
 		public int Points { get; set; } = 0;
-		/// <summary>
-		/// 手札にAの有無
-		/// </summary>
-		private HaveA HaveA { get; set; } = HaveA.None;
-		/// <summary>
-		/// Aを11としたときに点数が21を超えているか
-		/// </summary>
-		private bool IsOverFlowByA { get; set; } = false;
-
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		public Hand()
-		{
-			List<Card> cards = new List<Card>();
-			this.HandCards = cards;
-		}
 
 		/// <summary>
 		/// カード追加
@@ -44,105 +20,61 @@ namespace BrackJack
 		public bool AddCard(Card card)
 		{
 			HandCards.Add(card);
-			var convetedNumberPoint = ReturnConvertedNumber(card);
-			CaluculatePoints(convetedNumberPoint);
+			ConvertBrackJackNumber();
+			CaluculatePoints();
 			if (Points > 21) return true;
 
 			return false;
 		}
 
 		/// <summary>
-		/// 点数変換
+		/// 点数の変換
 		/// </summary>
-		/// <param name="card"></param>
-		/// <returns></returns>
-		private int ReturnConvertedNumber(Card card)
+		public void ConvertBrackJackNumber()
 		{
-			var convertedNumber = card.Number;
+			int points = 0;
+			var i = 0;
 
-			convertedNumber = ReturnConvetedJQK(card);
-
-			if ((HaveA != HaveA.None) || (card.DisplayNumber == "A"))
+			foreach (var card in HandCards)
 			{
-				convertedNumber = ReturnConvetedAAndRecalucatePoints(convertedNumber, card);
-			}
-
-			return convertedNumber;
-		}
-		/// <summary>
-		/// 点数計算処理
-		/// </summary>
-		/// <param name="convetedNumberPoint"></param>
-		private void CaluculatePoints(int convetedNumberPoint)
-		{
-			if (IsOverFlowByA)
-			{
-				Points -= 10;
-				Points += convetedNumberPoint;
-				IsOverFlowByA = false;
-			}
-			else Points += convetedNumberPoint;
-
-			return;
-		}
-
-		/// <summary>
-		/// JQKを変換して返す
-		/// </summary>
-		/// <param name="card"></param>
-		/// <returns></returns>
-		public int ReturnConvetedJQK(Card card)
-		{
-			var convertedNumber = card.Number;
-
-			if ((card.Number == 11) || (card.Number == 12) || (card.Number == 13))
-				convertedNumber = 10;
-
-			return convertedNumber;
-		}
-
-		/// <summary>
-		/// Aを変換して返す
-		/// </summary>
-		public int ReturnConvetedAAndRecalucatePoints(int cardNumber, Card card)
-		{
-			var points = Points;
-
-			if (card.DisplayNumber == "A")
-			{
-				switch (HaveA)
+				if (card.DisplayNumber == "A" && card.BlackJackNumber == 1)
 				{
-					case (HaveA.None):
-						if ((points + 11) > 21) HaveA = HaveA.Have;
-						else
-						{
-							HaveA = HaveA.AddPoint;
-							cardNumber = 11;
-						}
-						break;
-
-					case (HaveA.Have):
-						break;
-
-					case (HaveA.AddPoint):
-						if ((points + 1) > 21)
-						{
-							HaveA = HaveA.Have;
-							IsOverFlowByA = true;
-						}
-						break;
+					foreach (var handcard in HandCards)
+					{
+						points += (handcard.BlackJackNumber);
+					}
+					if(11 <= (21 - (points - 1))) HandCards[i].ConvertA();
+					break;
 				}
-			}
-			else
-			{
-				if ((HaveA == HaveA.AddPoint) && ((points + cardNumber) > 21))
+				else if(card.DisplayNumber == "A" && card.BlackJackNumber == 11)
 				{
-					HaveA = HaveA.Have;
-					IsOverFlowByA = true;
+					foreach (var handcard in HandCards)
+					{
+						points += (handcard.BlackJackNumber);
+					}
+					if (11 > (21 - (points - 11))) HandCards[i].ConvertA();
+					break;
 				}
+				i++;
 			}
+		}
 
-			return cardNumber;
+		/// <summary>
+		/// 点数計算
+		/// </summary>
+		private void CaluculatePoints()
+		{
+			InitializePoints();
+
+			foreach(var card in HandCards)
+			{
+				Points += card.BlackJackNumber;
+			}
+		}
+
+		private void InitializePoints()
+		{
+			Points = 0;
 		}
 	}
 }
