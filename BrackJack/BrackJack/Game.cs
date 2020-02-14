@@ -64,7 +64,7 @@ namespace BlackJack
 			ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
 			//プレイヤーターン
-			var isPlayerHit = ReturnInputKey();
+			var isPlayerHit = IsCheckedHit();
 			while (isPlayerHit)
 			{
 				Player.DrawCard(Deck.DrawnCard());
@@ -72,15 +72,15 @@ namespace BlackJack
 				ShowPointsAndHand(false, Player.Hand, nameof(Player));
 				ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
 
-				if (!Player.IsBust)
+				if (!Player.Hand.IsBust)
 				{
-					isPlayerHit = ReturnInputKey();
+					isPlayerHit = IsCheckedHit();
 				}
 				else break;
 			}
 
 			//バースト
-			if (Player.IsBust)
+			if (Player.Hand.IsBust)
 			{
 				ShowBustMessage(nameof(Player));
 				ShowResultMessage(Result.Lose);
@@ -89,11 +89,11 @@ namespace BlackJack
 				return IsRestartGame;
 			}
 			//ディーラーターン
-			var continueDraw = true;
-				while (continueDraw)
+			var isFinishedDraw = false;
+				while (!isFinishedDraw)
 				{
-					continueDraw = Dealer.IsDrawDealerOverFlow17(Deck.DrawnCard(), Dealer.Hand.Points);
-					if (Dealer.IsBust)
+					Dealer.DrawCard(Deck.DrawnCard(), ref isFinishedDraw);
+					if (Dealer.Hand.IsBust)
 					{
 						ShowPointsAndHand(false, Player.Hand, nameof(Player));
 						ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
@@ -126,7 +126,11 @@ namespace BlackJack
 			WriteLine();
 		}
 
-		private string ShowHitOrStandMessageAndReturnInputKey()
+		/// <summary>
+		/// ヒットするかスタンドするかを受け取る
+		/// </summary>
+		/// <returns></returns>
+		private string ReceiveHitOrStand()
 		{
 			WriteLine();
 			Write("ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ");
@@ -136,16 +140,16 @@ namespace BlackJack
 			return inputKey;
 		}
 		/// <summary>
-		/// プレイヤーヒット有無を返す
+		/// ヒットしたかどうか確認する
 		/// </summary>
-		private bool ReturnInputKey()
+		private bool IsCheckedHit()
 		{
 			var isPlayerHit = false;
-			var inputKey = ShowHitOrStandMessageAndReturnInputKey();
+			var inputKey = ReceiveHitOrStand();
 
 			while (!(inputKey == "h" || inputKey == "s"))
 			{
-				inputKey = ShowHitOrStandMessageAndReturnInputKey();
+				inputKey = ReceiveHitOrStand();
 			}
 
 			if (inputKey == "h") isPlayerHit = true;
@@ -176,8 +180,6 @@ namespace BlackJack
 			if (inputKey == "e") return;
 			//ゲームリスタート
 			IsRestartGame = true;
-
-			return;
 		}
 
 		/// <summary>
@@ -198,7 +200,6 @@ namespace BlackJack
 		private void ShowBustMessage(string player)
 		{
 			WriteLine($"{player}はバーストしました。");
-			return;
 		}
 
 		/// <summary>
@@ -219,8 +220,6 @@ namespace BlackJack
 					WriteLine("引き分けです。");
 					break;
 			}
-
-			return;
 		}
 
 		/// <summary>
@@ -246,10 +245,7 @@ namespace BlackJack
 
 				Write($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
 				WriteLine();
-
 			}
-
-			return;
 		}
 	}
 }

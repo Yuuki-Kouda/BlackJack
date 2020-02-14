@@ -42,8 +42,6 @@ namespace BlackJack
 			}
 			//シャッフル
 			DeckList = cardList.OrderBy(i => Guid.NewGuid()).ToList();
-
-			return;
 		}
 
 		/// <summary>

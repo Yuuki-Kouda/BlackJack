@@ -12,50 +12,58 @@ namespace BlackJack
 		/// 点数
 		/// </summary>
 		public int Points { get; set; } = 0;
+		/// <summary>
+		/// バースト有無
+		/// </summary>
+		public bool IsBust
+		{
+			get
+			{
+				if (Points > 21) return true;
+				else return false;
+			}
+		}
 
 		/// <summary>
 		/// カード追加
 		/// </summary>
 		/// <param name="card"></param>
-		public bool AddCard(Card card)
+		public void AddCard(Card card)
 		{
 			HandCards.Add(card);
-			ConvertBrackJackNumber();
+			ConvertAcesBrackJackNumber();
 			CaluculatePoints();
-			if (Points > 21) return true;
-
-			return false;
 		}
 
 		/// <summary>
 		/// 点数の変換
 		/// </summary>
-		public void ConvertBrackJackNumber()
+		public void ConvertAcesBrackJackNumber()
 		{
-			int points = 0;
-			var i = 0;
+			var points = 0;
+			var hasAce = false;
+			int aceIndex = new int();
+			var handCardsIndex = 0;
 
 			foreach (var card in HandCards)
 			{
-				if (card.DisplayNumber == "A" && card.BlackJackNumber == 1)
+				//Aの要素番号の特定
+				if (!hasAce && card.DisplayNumber == "A")
 				{
-					foreach (var handcard in HandCards)
-					{
-						points += (handcard.BlackJackNumber);
-					}
-					if(11 <= (21 - (points - 1))) HandCards[i].ConvertA();
-					break;
+					aceIndex = handCardsIndex;
+					hasAce = true;
 				}
-				else if(card.DisplayNumber == "A" && card.BlackJackNumber == 11)
-				{
-					foreach (var handcard in HandCards)
-					{
-						points += (handcard.BlackJackNumber);
-					}
-					if (11 > (21 - (points - 11))) HandCards[i].ConvertA();
-					break;
-				}
-				i++;
+				else points += card.BlackJackNumber;
+
+				handCardsIndex++;
+			}
+
+			if (hasAce)
+			{
+				//Aの点数を11にする
+				if (11 <= 21 - points) HandCards[aceIndex].SetBlackJackNumber(11);
+				//Aの点数を1にする
+				else HandCards[aceIndex].SetBlackJackNumber(1);
 			}
 		}
 
@@ -66,7 +74,7 @@ namespace BlackJack
 		{
 			InitializePoints();
 
-			foreach(var card in HandCards)
+			foreach (var card in HandCards)
 			{
 				Points += card.BlackJackNumber;
 			}

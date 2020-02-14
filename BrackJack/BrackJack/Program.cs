@@ -16,8 +16,6 @@
 				//生成
 				isRestartGame = game.Run();
 			}
-
-			return;
 		}
 	}
 }

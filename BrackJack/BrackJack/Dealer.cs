@@ -9,19 +9,14 @@ namespace BlackJack
 	class Dealer : Player
 	{
 		/// <summary>
-		/// Dealerがカードを引く処理
+		/// Dealerターン時にカードを引く処理
 		/// </summary>
 		/// <param name="card"></param>
-		/// <param name="points"></param>
-		/// <returns></returns>
-		public bool IsDrawDealerOverFlow17(Card card, int points)
+		/// <param name="isFinishedDraw"></param>
+		public void DrawCard(Card card, ref bool isFinishedDraw)
 		{
-			if (points >= 17) return false;
-			else 
-			{
-				DrawCard(card);
-				return true;
-			}
+			if (Hand.Points < 17) Hand.AddCard(card);
+			else isFinishedDraw = true;
 		}
 	}
 }
