@@ -27,7 +27,7 @@
 		/// <summary>
 		/// カードの点数
 		/// </summary>
-		public int BlackJackNumber { get; set; }
+		public int BlackJackNumber { get; private set; }
 		/// <summary>
 		/// トランプのマーク
 		/// </summary>
