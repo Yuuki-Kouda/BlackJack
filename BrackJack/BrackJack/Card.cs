@@ -47,42 +47,38 @@
 			{
 				case 1:
 					this.DisplayNumber = "A";
-					this.BlackJackNumber = number;
+					SetBlackJackNumber(number);
 					break;
 
 				case 11:
 					this.DisplayNumber = "J";
-					this.BlackJackNumber = 10;
+					SetBlackJackNumber(10);
 					break;
 
 				case 12:
 					this.DisplayNumber = "Q";
-					this.BlackJackNumber = 10;
+					SetBlackJackNumber(10);
 					break;
 
 				case 13:
 					this.DisplayNumber = "K";
-					this.BlackJackNumber = 10;
+					SetBlackJackNumber(10);
 					break;
 
 				default:
 					this.DisplayNumber = number.ToString();
-					this.BlackJackNumber = number;
+					SetBlackJackNumber(number);
 					break;
 			}
 		}
 
 		/// <summary>
-		/// Aの点数変換
+		/// 点数変換
 		/// </summary>
 		/// <param name="card"></param>
-		public void SetBlackJackNumberToOneOrEleven(bool isChengedEleven)
+		public void SetBlackJackNumber(int number)
 		{
-			if (isChengedEleven)
-			{
-				BlackJackNumber = 11;
-			}
-			else BlackJackNumber = 1;
+			BlackJackNumber = number;
 		}
 	}
 }

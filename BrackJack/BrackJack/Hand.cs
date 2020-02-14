@@ -61,11 +61,9 @@ namespace BlackJack
 			if (hasAce)
 			{
 				//Aの点数を11にする
-				if (11 <= 21 - points) HandCards[aceIndex]
-										.SetBlackJackNumberToOneOrEleven(true);
+				if (11 <= 21 - points) HandCards[aceIndex].SetBlackJackNumber(11);
 				//Aの点数を1にする
-				else HandCards[aceIndex]
-						.SetBlackJackNumberToOneOrEleven(false);
+				else HandCards[aceIndex].SetBlackJackNumber(1);
 			}
 		}
 
