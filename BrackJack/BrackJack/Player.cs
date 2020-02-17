@@ -21,10 +21,13 @@
 
 		/// <summary>
 		/// 手札初期化
+		/// プレイヤー初期化
 		/// </summary>
 		public void InitializeHand()
+		public void InitializePlayer()
 		{
 			Hand = new Hand();
+			PlayerCall = PlayerCall.None;
 		}
 
 		/// <summary>
