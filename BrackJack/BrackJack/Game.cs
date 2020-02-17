@@ -89,10 +89,9 @@ namespace BlackJack
 				return IsRestartGame;
 			}
 			//ディーラーターン
-			var isFinishedDraw = false;
-				while (!isFinishedDraw)
+				while (!Dealer.IsFinishedDraw)
 				{
-					Dealer.DrawCard(Deck.DrawnCard(), ref isFinishedDraw);
+					Dealer.DrawCard(Deck.DrawnCard());
 					if (Dealer.Hand.IsBust)
 					{
 						ShowPointsAndHand(false, Player.Hand, nameof(Player));
