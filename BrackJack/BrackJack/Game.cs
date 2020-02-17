@@ -65,7 +65,7 @@ namespace BlackJack
 
 			//プレイヤーターン
 			SetPlayerCall();
-			while (Player.PlayerCall == PlayerCall.Hit)
+			while (Player.PlayerAction == PlayerAction.Hit)
 			{
 				Player.DrawCard(Deck.DrawnCard());
 
@@ -150,8 +150,8 @@ namespace BlackJack
 				inputKey = ComfirmHitOrStand();
 			}
 
-			if (inputKey == "h") Player.PlayerCall = PlayerCall.Hit;
-			else Player.PlayerCall = PlayerCall.Stand;
+			if (inputKey == "h") Player.PlayerAction = PlayerAction.Hit;
+			else Player.PlayerAction = PlayerAction.Stand;
 		}
 
 		/// <summary>

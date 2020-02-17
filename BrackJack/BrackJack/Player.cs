@@ -1,6 +1,6 @@
 ﻿namespace BlackJack
 {
-	enum PlayerCall
+	enum PlayerAction
 	{
 		None,
 		Hit,
@@ -11,7 +11,7 @@
 		/// <summary>
 		/// プレイヤーコール
 		/// </summary>
-		public PlayerCall PlayerCall { get; set; } = PlayerCall.None;
+		public PlayerAction PlayerAction { get; set; } = PlayerAction.None;
 
 		/// <summary>
 		/// プレイヤー初期化
