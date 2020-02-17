@@ -42,6 +42,8 @@ namespace BlackJack
 			this.Player = player;
 			this.Dealer = dealer;
 			this.Deck = deck;
+
+			ShowStartMessage();
 		}
 
 		public bool Run()
@@ -50,8 +52,6 @@ namespace BlackJack
 			Player.InitializePlayer();
 			Dealer.InitializeDealer();
 			Deck.InitializeDeckList();
-
-			ShowStartMessage();
 
 			//開始ドロー
 			Player.DrawCard(Deck.DrawnCard());
