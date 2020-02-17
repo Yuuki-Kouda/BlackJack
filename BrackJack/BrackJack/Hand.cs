@@ -14,15 +14,15 @@ namespace BlackJack
 		/// </summary>
 		public int Points { get; set; } = 0;
 		/// <summary>
-		/// バースト有無
+		/// バーストしてるかどうか
 		/// </summary>
-		public bool IsBust
-		{
+		public bool IsBust 
+		{ 
 			get
 			{
 				if (Points > 21) return true;
 				else return false;
-			}
+			} 
 		}
 
 		/// <summary>
