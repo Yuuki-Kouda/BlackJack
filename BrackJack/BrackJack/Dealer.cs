@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack
 {
-	class Dealer : Player
+	class Dealer : Players
 	{
 		/// <summary>
 		/// Dealerターン時にカードを引く処理

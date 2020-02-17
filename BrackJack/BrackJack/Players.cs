@@ -3,8 +3,7 @@
 	/// <summary>
 	/// プレイヤー
 	/// </summary>
-	class Player
-	class Player : Players
+	abstract class Players
 	{
 		/// <summary>
 		/// 手札
@@ -22,9 +21,6 @@
 		/// <summary>
 		/// ドローカード
 		/// </summary>
-		public void DrawCard(Card card)
-		{
-			Hand.AddCard(card);
-		}
+		abstract public void DrawCard(Card card);
 	}
 }
