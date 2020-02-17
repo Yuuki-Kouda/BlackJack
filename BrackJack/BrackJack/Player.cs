@@ -4,12 +4,20 @@
 	/// プレイヤー
 	/// </summary>
 	class Player
+	enum PlayerCall
+	{
+		None,
+		Hit,
+		Stand
+	}
 	class Player : Players
 	{
 		/// <summary>
 		/// 手札
+		/// プレイヤーコール
 		/// </summary>
 		public Hand Hand { get; set; } = new Hand();
+		public PlayerCall PlayerCall { get; set; } = PlayerCall.None;
 
 		/// <summary>
 		/// 手札初期化

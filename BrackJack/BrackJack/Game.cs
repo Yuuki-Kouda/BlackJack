@@ -66,6 +66,8 @@ namespace BlackJack
 			//プレイヤーターン
 			var isPlayerHit = IsCheckedHit();
 			while (isPlayerHit)
+			SetPlayerCall();
+			while (Player.PlayerCall == PlayerCall.Hit)
 			{
 				Player.DrawCard(Deck.DrawnCard());
 
@@ -74,7 +76,7 @@ namespace BlackJack
 
 				if (!Player.Hand.IsBust)
 				{
-					isPlayerHit = IsCheckedHit();
+					SetPlayerCall();
 				}
 				else break;
 			}
