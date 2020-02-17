@@ -31,11 +31,14 @@
 		}
 
 		/// <summary>
-		/// ドローカード
+		/// プレイヤードローカード
 		/// </summary>
-		public void DrawCard(Card card)
+		/// <param name="card"></param>
+		public override void DrawCard(Card card)
 		{
 			Hand.AddCard(card);
+			Hand.CaluculatePoints();
 		}
 	}
 }
+
