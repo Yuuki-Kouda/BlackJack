@@ -18,6 +18,7 @@ namespace BlackJack
 		/// </summary>
 		public void InitializeDealer()
 		{
+			Hand = new Hand();
 			IsFinishedDraw = false;
 		}
 

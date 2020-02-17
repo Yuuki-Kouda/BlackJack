@@ -18,7 +18,8 @@
 		/// </summary>
 		public void InitializePlayer()
 		{
-			PlayerCall = PlayerCall.None;
+			Hand = new Hand();
+			PlayerAction = PlayerAction.None;
 		}
 
 		/// <summary>
