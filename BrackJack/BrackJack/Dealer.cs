@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack
 {
-	class Dealer : Players
+	class Dealer : PlayerBase
 	{
 		/// <summary>
 		/// ディーラーが引き終わったか

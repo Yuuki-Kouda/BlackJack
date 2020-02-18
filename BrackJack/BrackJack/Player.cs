@@ -7,7 +7,7 @@
 		Stand
 	}
 
-	class Player : Players
+	class Player : PlayerBase
 	{
 		/// <summary>
 		/// プレイヤーコール
