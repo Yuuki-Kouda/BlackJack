@@ -6,12 +6,13 @@
 		Hit,
 		Stand
 	}
+
 	class Player : Players
 	{
 		/// <summary>
 		/// プレイヤーコール
 		/// </summary>
-		public PlayerAction PlayerAction { get; set; } = PlayerAction.None;
+		public PlayerAction PlayerAction { get; set; }
 
 		/// <summary>
 		/// プレイヤー初期化
