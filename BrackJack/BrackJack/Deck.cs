@@ -50,8 +50,8 @@ namespace BlackJack
 		/// <returns></returns>
 		public Card DrawnCard()
 		{
-			var drawnCard = DeckList[0]; 
-			DeckList.RemoveAt(0);
+			var drawnCard = DeckList.FirstOrDefault(); 
+			DeckList.Remove(drawnCard);
 
 			return drawnCard;
 		}
