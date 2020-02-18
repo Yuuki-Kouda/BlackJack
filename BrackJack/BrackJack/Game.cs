@@ -1,4 +1,5 @@
 ﻿using static System.Console;
+using System.Linq;
 
 namespace BlackJack
 {
@@ -242,9 +243,9 @@ namespace BlackJack
 			}
 			else
 			{
-				Write($" Total:{playersHand.HandCards[0].BlackJackNumber} ");
+				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
 
-				Write($"[{playersHand.HandCards[0].Mark} {playersHand.HandCards[0].DisplayNumber}]");
+				Write($"[{playersHand.HandCards.FirstOrDefault().Mark} {playersHand.HandCards.FirstOrDefault().DisplayNumber}]");
 				WriteLine();
 			}
 		}
