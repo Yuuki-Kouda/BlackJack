@@ -111,7 +111,7 @@ namespace BlackJack
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
 			ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
 
-			var result = ReturnResult();
+			var result = GetResult();
 			ShowResultMessage(result);
 
 			SetIsRestartGame();
@@ -185,10 +185,10 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// 勝敗を返す
+		/// 勝敗を取得する
 		/// </summary>
 		/// <returns></returns>
-		private Result ReturnResult()
+		private Result GetResult()
 		{
 			if (Player.Hand.Points > Dealer.Hand.Points) return Result.Win;
 			else if (Player.Hand.Points < Dealer.Hand.Points) return Result.Lose;
