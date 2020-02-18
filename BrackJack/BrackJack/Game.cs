@@ -30,7 +30,7 @@ namespace BlackJack
 		/// <summary>
 		/// リスタート有無
 		/// </summary>
-		bool IsRestartGame { get; set; } = false;
+		bool IsRestartGame { get; set; }
 
 		/// <summary>
 		/// コンストラクタ
@@ -53,6 +53,7 @@ namespace BlackJack
 			Player.InitializePlayer();
 			Dealer.InitializeDealer();
 			Deck.InitializeDeckList();
+			IsRestartGame = false;
 
 			//開始ドロー
 			Player.DrawCard(Deck.DrawnCard());

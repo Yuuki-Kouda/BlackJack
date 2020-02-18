@@ -7,7 +7,7 @@
 		Stand
 	}
 
-	class Player : Players
+	class Player : AbstractPlayer
 	{
 		/// <summary>
 		/// プレイヤーコール
