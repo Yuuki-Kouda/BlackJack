@@ -64,7 +64,7 @@ namespace BlackJack
 				Dealer.DrawCard(Deck.DrawCard());
 				Dealer.DrawCard(Deck.DrawCard());
 			}
-			catch(ArgumentNullException e)
+			catch(ArgumentNullException)
 			{
 				ShowDeckRunsOutMessage();
 				SetIsRestartGame();
@@ -80,9 +80,9 @@ namespace BlackJack
 			{
 				try
 				{
-					Player.DrawCard(Deck.DrawnCard());
+					Player.DrawCard(Deck.DrawCard());
 				}
-				catch (ArgumentNullException e)
+				catch (ArgumentNullException)
 				{
 					ShowDeckRunsOutMessage();
 					SetIsRestartGame();
@@ -113,9 +113,9 @@ namespace BlackJack
 			{
 				try 
 				{
-					Dealer.DrawCard(Deck.DrawnCard());
+					Dealer.DrawCard(Deck.DrawCard());
 				}
-				catch(ArgumentNullException e)
+				catch(ArgumentNullException)
 				{
 					ShowDeckRunsOutMessage();
 					SetIsRestartGame();
