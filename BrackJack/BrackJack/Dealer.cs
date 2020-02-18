@@ -26,7 +26,7 @@ namespace BlackJack
 		{
 			get
 			{
-				if (Hand.Points >= 17) return true;
+				if (Hand.Points >= Seventeen) return true;
 				else return false;
 			}
 		}

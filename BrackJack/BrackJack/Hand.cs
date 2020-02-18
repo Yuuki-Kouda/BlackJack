@@ -20,7 +20,7 @@ namespace BlackJack
 		{ 
 			get
 			{
-				if (Points > 21) return true;
+				if (Points > Twentyone) return true;
 				else return false;
 			} 
 		}
@@ -51,9 +51,9 @@ namespace BlackJack
 				aces.ToList().ForEach(ace => ace.BlackJackNumber = ace.Number);
 
 				var firstAceCard = aces.FirstOrDefault();
-				var differenceOfBlackJackNumber = 21 - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
+				var differenceOfBlackJackNumber = Twentyone - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
 
-				if (11 <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = 11;
+				if (Eleven <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = Eleven;
 			}
 
 			Points = HandCards.Sum(card => card.BlackJackNumber);

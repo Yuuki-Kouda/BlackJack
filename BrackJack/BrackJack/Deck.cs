@@ -36,7 +36,7 @@ namespace BlackJack
 		{
 			List<Card> cardList = new List<Card>();
 
-			for (int i = 1; i <= 13; i++)
+			for (int i = 1; i <= Thirteen; i++)
 			{
 				cardList.Add(CreateCard(Suit.Heart, i));
 				cardList.Add(CreateCard(Suit.Spade, i));
