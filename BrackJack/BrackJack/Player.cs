@@ -1,29 +1,37 @@
 ﻿namespace BlackJack
 {
-	/// <summary>
-	/// プレイヤー
-	/// </summary>
-	class Player
+	enum PlayerAction
+	{
+		None,
+		Hit,
+		Stand
+	}
+
+	class Player : Players
 	{
 		/// <summary>
-		/// 手札
+		/// プレイヤーコール
 		/// </summary>
-		public Hand Hand { get; set; } = new Hand();
+		public PlayerAction PlayerAction { get; set; }
 
 		/// <summary>
-		/// 手札初期化
+		/// プレイヤー初期化
 		/// </summary>
-		public void InitializeHand()
+		public void InitializePlayer()
 		{
 			Hand = new Hand();
+			PlayerAction = PlayerAction.None;
 		}
 
 		/// <summary>
-		/// ドローカード
+		/// プレイヤードローカード
 		/// </summary>
-		public void DrawCard(Card card)
+		/// <param name="card"></param>
+		public override void DrawCard(Card card)
 		{
 			Hand.AddCard(card);
+			Hand.CaluculatePoints();
 		}
 	}
 }
+

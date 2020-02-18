@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BlackJack
 {
@@ -13,15 +14,15 @@ namespace BlackJack
 		/// </summary>
 		public int Points { get; set; } = 0;
 		/// <summary>
-		/// バースト有無
+		/// バーストしてるかどうか
 		/// </summary>
-		public bool IsBust
-		{
+		public bool IsBust 
+		{ 
 			get
 			{
 				if (Points > 21) return true;
 				else return false;
-			}
+			} 
 		}
 
 		/// <summary>
@@ -31,58 +32,27 @@ namespace BlackJack
 		public void AddCard(Card card)
 		{
 			HandCards.Add(card);
-			ConvertAcesBrackJackNumber();
-			CaluculatePoints();
-		}
-
-		/// <summary>
-		/// 点数の変換
-		/// </summary>
-		public void ConvertAcesBrackJackNumber()
-		{
-			var points = 0;
-			var hasAce = false;
-			int aceIndex = new int();
-			var handCardsIndex = 0;
-
-			foreach (var card in HandCards)
-			{
-				//Aの要素番号の特定
-				if (!hasAce && card.DisplayNumber == "A")
-				{
-					aceIndex = handCardsIndex;
-					hasAce = true;
-				}
-				else points += card.BlackJackNumber;
-
-				handCardsIndex++;
-			}
-
-			if (hasAce)
-			{
-				//Aの点数を11にする
-				if (11 <= 21 - points) HandCards[aceIndex].SetBlackJackNumber(11);
-				//Aの点数を1にする
-				else HandCards[aceIndex].SetBlackJackNumber(1);
-			}
 		}
 
 		/// <summary>
 		/// 点数計算
 		/// </summary>
-		private void CaluculatePoints()
+		public void CaluculatePoints()
 		{
-			InitializePoints();
+			var aces = HandCards.Where(card => card.Number == 1).ToList();
 
-			foreach (var card in HandCards)
+			if (aces.Any())
 			{
-				Points += card.BlackJackNumber;
-			}
-		}
+				//Aの初期化
+				aces.ToList().ForEach(ace => ace.BlackJackNumber = ace.Number);
 
-		private void InitializePoints()
-		{
-			Points = 0;
+				var firstAceCard = aces.FirstOrDefault();
+				var differenceOfBlackJackNumber = 21 - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
+
+				if (11 <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = 11;
+			}
+
+			Points = HandCards.Sum(card => card.BlackJackNumber);
 		}
 	}
 }

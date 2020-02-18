@@ -27,7 +27,7 @@
 		/// <summary>
 		/// カードの点数
 		/// </summary>
-		public int BlackJackNumber { get; private set; }
+		public int BlackJackNumber { get; set; }
 		/// <summary>
 		/// トランプのマーク
 		/// </summary>
@@ -47,38 +47,29 @@
 			{
 				case 1:
 					this.DisplayNumber = "A";
-					SetBlackJackNumber(number);
+					this.BlackJackNumber = number;
 					break;
 
 				case 11:
 					this.DisplayNumber = "J";
-					SetBlackJackNumber(10);
+					this.BlackJackNumber = 10;
 					break;
 
 				case 12:
 					this.DisplayNumber = "Q";
-					SetBlackJackNumber(10);
+					this.BlackJackNumber = 10;
 					break;
 
 				case 13:
 					this.DisplayNumber = "K";
-					SetBlackJackNumber(10);
+					this.BlackJackNumber = 10;
 					break;
 
 				default:
 					this.DisplayNumber = number.ToString();
-					SetBlackJackNumber(number);
+					this.BlackJackNumber = number;
 					break;
 			}
-		}
-
-		/// <summary>
-		/// 点数変換
-		/// </summary>
-		/// <param name="card"></param>
-		public void SetBlackJackNumber(int number)
-		{
-			BlackJackNumber = number;
 		}
 	}
 }

@@ -6,17 +6,33 @@ using System.Threading.Tasks;
 
 namespace BlackJack
 {
-	class Dealer : Player
+	class Dealer : Players
 	{
 		/// <summary>
-		/// Dealerターン時にカードを引く処理
+		/// ディーラーが引き終わったか
+		/// </summary>
+		public bool IsFinishedDraw { get; set; }
+
+		/// <summary>
+		/// ディーラー初期化
+		/// </summary>
+		public void InitializeDealer()
+		{
+			Hand = new Hand();
+			IsFinishedDraw = false;
+		}
+
+		/// <summary>
+		/// ディーラーがカードを引く処理
 		/// </summary>
 		/// <param name="card"></param>
 		/// <param name="isFinishedDraw"></param>
-		public void DrawCard(Card card, ref bool isFinishedDraw)
+		public override void DrawCard(Card card)
 		{
-			if (Hand.Points < 17) Hand.AddCard(card);
-			else isFinishedDraw = true;
+			Hand.AddCard(card);
+			Hand.CaluculatePoints();
+
+			if (Hand.Points >= 17) IsFinishedDraw = true;
 		}
 	}
 }
