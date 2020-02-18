@@ -128,7 +128,7 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// ヒットするかスタンドするかを受け取る
+		/// ヒットするかスタンドするかを確認する
 		/// </summary>
 		/// <returns></returns>
 		private string ComfirmHitOrStand()

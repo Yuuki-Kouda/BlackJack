@@ -43,6 +43,7 @@ namespace BlackJack
 
 			if (aces.Any())
 			{
+				//Aの初期化
 				aces.ToList().ForEach(ace => ace.BlackJackNumber = ace.Number);
 
 				var firstAceCard = aces.FirstOrDefault();
