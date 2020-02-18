@@ -1,5 +1,6 @@
 ﻿using static System.Console;
 using System.Linq;
+using System;
 
 namespace BlackJack
 {
@@ -56,10 +57,18 @@ namespace BlackJack
 			IsRestartGame = false;
 
 			//開始ドロー
-			Player.DrawCard(Deck.DrawnCard());
-			Player.DrawCard(Deck.DrawnCard());
-			Dealer.DrawCard(Deck.DrawnCard());
-			Dealer.DrawCard(Deck.DrawnCard());
+			try
+			{
+				Player.DrawCard(Deck.DrawnCard());
+				Player.DrawCard(Deck.DrawnCard());
+				Dealer.DrawCard(Deck.DrawnCard());
+				Dealer.DrawCard(Deck.DrawnCard());
+			}
+			catch(ArgumentNullException e)
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+			}
 
 			//表示
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
@@ -69,7 +78,15 @@ namespace BlackJack
 			SetPlayerAction();
 			while (Player.PlayerAction == PlayerAction.Hit)
 			{
-				Player.DrawCard(Deck.DrawnCard());
+				try
+				{
+					Player.DrawCard(Deck.DrawnCard());
+				}
+				catch (ArgumentNullException e)
+				{
+					ShowDeckRunsOutMessage();
+					SetIsRestartGame();
+				}
 
 				ShowPointsAndHand(false, Player.Hand, nameof(Player));
 				ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
@@ -94,7 +111,16 @@ namespace BlackJack
 			//ディーラーターン
 			while (!Dealer.IsFinishedDraw)
 			{
-				Dealer.DrawCard(Deck.DrawnCard());
+				try 
+				{
+					Dealer.DrawCard(Deck.DrawnCard());
+				}
+				catch(ArgumentNullException e)
+				{
+					ShowDeckRunsOutMessage();
+					SetIsRestartGame();
+				}
+
 				if (Dealer.Hand.IsBust)
 				{
 					ShowPointsAndHand(false, Player.Hand, nameof(Player));
@@ -126,6 +152,14 @@ namespace BlackJack
 		{
 			WriteLine("ブラックジャックゲームへようこそ");
 			WriteLine();
+		}
+
+		/// <summary>
+		/// 山札切れメッセージ出力
+		/// </summary>
+		private void ShowDeckRunsOutMessage()
+		{
+			WriteLine("山札にカードがありません。");
 		}
 
 		/// <summary>

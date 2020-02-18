@@ -50,8 +50,11 @@ namespace BlackJack
 		/// <returns></returns>
 		public Card DrawnCard()
 		{
-			var drawnCard = DeckList.FirstOrDefault(); 
-			DeckList.Remove(drawnCard);
+			var drawnCard = DeckList.FirstOrDefault();
+
+			//山札にカードがない場合は例外をスロー
+			if (drawnCard == null) throw new ArgumentNullException();
+			else DeckList.Remove(drawnCard);
 
 			return drawnCard;
 		}
