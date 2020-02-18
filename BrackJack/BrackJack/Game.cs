@@ -88,22 +88,23 @@ namespace BlackJack
 				SetIsRestartGame();
 				return IsRestartGame;
 			}
+
 			//ディーラーターン
-				while (!Dealer.IsFinishedDraw)
+			while (!Dealer.IsFinishedDraw)
+			{
+				Dealer.DrawCard(Deck.DrawnCard());
+				if (Dealer.Hand.IsBust)
 				{
-					Dealer.DrawCard(Deck.DrawnCard());
-					if (Dealer.Hand.IsBust)
-					{
-						ShowPointsAndHand(false, Player.Hand, nameof(Player));
-						ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+					ShowPointsAndHand(false, Player.Hand, nameof(Player));
+					ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
 
-						ShowBustMessage(nameof(Dealer));
-						ShowResultMessage(Result.Win);
+					ShowBustMessage(nameof(Dealer));
+					ShowResultMessage(Result.Win);
 
-						SetIsRestartGame();
-						return IsRestartGame;
-					}
+					SetIsRestartGame();
+					return IsRestartGame;
 				}
+			}
 
 			//勝負
 			ShowPointsAndHand(false, Player.Hand, nameof(Player));
