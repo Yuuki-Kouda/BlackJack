@@ -59,10 +59,10 @@ namespace BlackJack
 			//開始ドロー
 			try
 			{
-				Player.DrawCard(Deck.DrawnCard());
-				Player.DrawCard(Deck.DrawnCard());
-				Dealer.DrawCard(Deck.DrawnCard());
-				Dealer.DrawCard(Deck.DrawnCard());
+				Player.DrawCard(Deck.DrawCard());
+				Player.DrawCard(Deck.DrawCard());
+				Dealer.DrawCard(Deck.DrawCard());
+				Dealer.DrawCard(Deck.DrawCard());
 			}
 			catch(ArgumentNullException e)
 			{

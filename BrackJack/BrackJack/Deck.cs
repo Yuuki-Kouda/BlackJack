@@ -51,15 +51,15 @@ namespace BlackJack
 		/// ドロー
 		/// </summary>
 		/// <returns></returns>
-		public Card DrawnCard()
+		public Card DrawCard()
 		{
-			var drawnCard = DeckList.FirstOrDefault();
+			var card = DeckList.FirstOrDefault();
 
 			//山札にカードがない場合は例外をスロー
-			if (drawnCard == null) throw new ArgumentNullException();
-			else DeckList.Remove(drawnCard);
+			if (card == null) throw new ArgumentNullException();
+			else DeckList.Remove(card);
 
-			return drawnCard;
+			return card;
 		}
 	}
 }
