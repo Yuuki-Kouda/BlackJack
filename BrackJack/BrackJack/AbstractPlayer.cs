@@ -3,7 +3,7 @@
 	/// <summary>
 	/// プレイヤー
 	/// </summary>
-	abstract class PlayerBase
+	abstract class AbstractPlayer
 	{
 		/// <summary>
 		/// 手札
