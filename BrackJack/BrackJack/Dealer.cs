@@ -11,7 +11,14 @@ namespace BlackJack
 		/// <summary>
 		/// ディーラーが引き終わったか
 		/// </summary>
-		public bool IsFinishedDraw { get; set; }
+		public bool IsFinishedDraw 
+		{
+			get
+			{
+				if (Hand.Points >= 17) return true;
+				else return false;
+			}
+		}
 
 		/// <summary>
 		/// ディーラー初期化
@@ -19,7 +26,6 @@ namespace BlackJack
 		public void InitializeDealer()
 		{
 			Hand = new Hand();
-			IsFinishedDraw = false;
 		}
 
 		/// <summary>
@@ -31,8 +37,6 @@ namespace BlackJack
 		{
 			Hand.AddCard(card);
 			Hand.CaluculatePoints();
-
-			if (Hand.Points >= 17) IsFinishedDraw = true;
 		}
 	}
 }
