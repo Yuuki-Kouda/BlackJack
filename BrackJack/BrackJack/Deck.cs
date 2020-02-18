@@ -14,6 +14,9 @@ namespace BlackJack
 		/// </summary>
 		List<Card> DeckList { get; set; }
 
+		//定数
+		private readonly int Thirteen = 13;
+
 		/// <summary>
 		/// トランプ生成
 		/// </summary>

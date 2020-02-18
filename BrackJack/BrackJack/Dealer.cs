@@ -20,6 +20,10 @@ namespace BlackJack
 			}
 		}
 
+		//定数
+		private readonly int Two = 2;
+		private readonly int Seventeen = 17;
+
 		/// <summary>
 		/// ディーラー初期化
 		/// </summary>

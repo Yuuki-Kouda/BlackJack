@@ -25,6 +25,10 @@ namespace BlackJack
 			} 
 		}
 
+		//定数
+		private readonly int Twentyone = 21;
+		private readonly int Eleven = 11;
+
 		/// <summary>
 		/// カード追加
 		/// </summary>
