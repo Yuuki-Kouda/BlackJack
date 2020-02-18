@@ -29,15 +29,10 @@ namespace BlackJack
 		/// <param name="isFinishedDraw"></param>
 		public override void DrawCard(Card card)
 		{
-			if (Hand.Points < 17)
-			{
-				Hand.AddCard(card);
-				Hand.CaluculatePoints();
-			}
-			else
-			{
-				IsFinishedDraw = true;
-			}
+			Hand.AddCard(card);
+			Hand.CaluculatePoints();
+
+			if (Hand.Points >= 17) IsFinishedDraw = true;
 		}
 	}
 }
