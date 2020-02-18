@@ -39,19 +39,16 @@ namespace BlackJack
 		/// </summary>
 		public void CaluculatePoints()
 		{
-			var firstAceCard = HandCards.FirstOrDefault(card => card.DisplayNumber == "A");
+			var aces = HandCards.Where(card => card.Number == 1).ToList();
 
-			//Aが見つかった場合
-			if (firstAceCard != null)
+			if (aces.Any())
 			{
-				var aceCardList = HandCards.Where(card => card.DisplayNumber == "A").ToList();
+				aces.ToList().ForEach(ace => ace.BlackJackNumber = ace.Number);
 
-				foreach(var card in aceCardList) card.BlackJackNumber = 1;
+				var firstAceCard = aces.FirstOrDefault();
+				var differenceOfBlackJackNumber = 21 - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
 
-				var differenceOfBlackJackNumber = 21 - (HandCards.Sum(card => card.BlackJackNumber) - 1);
-
-				if (11 <= differenceOfBlackJackNumber) aceCardList[0].BlackJackNumber = 11;
-				else aceCardList[0].BlackJackNumber = 1;
+				if (11 <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = 11;
 			}
 
 			Points = HandCards.Sum(card => card.BlackJackNumber);
