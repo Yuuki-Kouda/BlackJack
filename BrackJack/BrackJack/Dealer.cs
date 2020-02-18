@@ -9,6 +9,17 @@ namespace BlackJack
 	class Dealer : AbstractPlayer
 	{
 		/// <summary>
+		/// ディーラーが開始時ドローを終わったか
+		/// </summary>
+		public bool IsFinishedFirstDraw 
+		{ 
+			get 
+			{
+				if (Hand.HandCards.Count > Two) return true;
+				else return false;
+			}
+		}
+		/// <summary>
 		/// ディーラーが引き終わったか
 		/// </summary>
 		public bool IsFinishedDraw 
