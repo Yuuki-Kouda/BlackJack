@@ -168,7 +168,7 @@ namespace BlackJack
 			//ディーラーターン
 			Turn = Turn.DealerTurn;
 
-			while (!Dealer.IsFinishedDealerTurn)
+			while (!Dealer.IsFinishedDealerDraw)
 			{
 				if (!Deck.HasDeckRunOut)
 				{
