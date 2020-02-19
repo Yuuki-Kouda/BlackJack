@@ -20,7 +20,8 @@ namespace BlackJack
 	{
 		None,
 		PlayerTurn,
-		DealerTurn
+		DealerTurn,
+		End
 	}
 	/// <summary>
 	/// ゲームプレイヤー
@@ -194,6 +195,7 @@ namespace BlackJack
 			}
 
 			//勝負
+			Turn = Turn.End;
 			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
 			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
@@ -326,7 +328,7 @@ namespace BlackJack
 		{
 			Write($"{player}: ");
 
-			if (gamePlayer == GamePlayer.Dealer && Turn != Turn.DealerTurn)
+			if (gamePlayer == GamePlayer.Dealer && Turn != Turn.End)
 			{
 				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
 
