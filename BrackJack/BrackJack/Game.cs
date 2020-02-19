@@ -129,7 +129,7 @@ namespace BlackJack
 
 			//プレイヤーターン
 			Turn = Turn.PlayerTurn;
-			var playerAction = SetPlayerAction();
+			var playerAction = GetPlayerAction();
 
 			while (playerAction == PlayerAction.Hit)
 			{
@@ -149,7 +149,7 @@ namespace BlackJack
 
 				if (!Player.Hand.IsBust)
 				{
-					SetPlayerAction();
+					playerAction = GetPlayerAction();
 				}
 				else break;
 			}
@@ -234,17 +234,18 @@ namespace BlackJack
 
 			return inputKey;
 		}
+
 		/// <summary>
-		/// ヒットかスタンドかを設定する
+		/// ヒットしたかスタンドしたかを取得する
 		/// </summary>
-		private void SetPlayerAction()
+		private PlayerAction GetPlayerAction()
 		{
 			var inputKey = ComfirmHitOrStand();
 
 			while (!(inputKey == "h" || inputKey == "s")) inputKey = ComfirmHitOrStand();
 
-			if (inputKey == "h") Player.PlayerAction = PlayerAction.Hit;
-			else Player.PlayerAction = PlayerAction.Stand;
+			if (inputKey == "h") return PlayerAction.Hit;
+			else return PlayerAction.Stand;
 		}
 
 		/// <summary>

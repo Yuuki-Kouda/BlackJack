@@ -10,9 +10,9 @@
 	class Player
 	{
 		/// <summary>
-		/// プレイヤーコール
+		/// 手札
 		/// </summary>
-		public PlayerAction PlayerAction { get; set; }
+		public Hand Hand { get; set; }
 
 		/// <summary>
 		/// 手札初期化
@@ -20,7 +20,6 @@
 		public void InitializeHand()
 		{
 			Hand = new Hand();
-			PlayerAction = PlayerAction.None;
 		}
 
 		/// <summary>
