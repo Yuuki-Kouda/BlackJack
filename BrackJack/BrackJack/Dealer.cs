@@ -9,9 +9,9 @@ namespace BlackJack
 	class Dealer : AbstractPlayer
 	{
 		/// <summary>
-		/// ディーラーが開始時ドローを終わったか
+		/// ディーラーが開始時ドローを引いている最中、または引いた直後か
 		/// </summary>
-		public bool IsFinishedFirstDraw 
+		public bool IsFinishedStartDealerDraw 
 		{ 
 			get 
 			{
@@ -20,9 +20,9 @@ namespace BlackJack
 			}
 		}
 		/// <summary>
-		/// ディーラーが引き終わったか
+		/// ディーラーの点数は17以上か
 		/// </summary>
-		public bool IsFinishedDraw 
+		public bool IsFinishedDealerTurn 
 		{
 			get
 			{

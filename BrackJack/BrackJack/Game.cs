@@ -14,6 +14,15 @@ namespace BlackJack
 		Draw
 	}
 
+	/// <summary>
+	/// ゲームプレイヤー
+	/// </summary>
+	enum GamePlayer
+	{
+		Player,
+		Dealer
+	}
+
 	class Game
 	{
 		/// <summary>
@@ -71,8 +80,8 @@ namespace BlackJack
 			}
 
 			//表示
-			ShowPointsAndHand(false, Player.Hand, nameof(Player));
-			ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
+			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 			//プレイヤーターン
 			SetPlayerAction();
@@ -88,8 +97,8 @@ namespace BlackJack
 					SetIsRestartGame();
 				}
 
-				ShowPointsAndHand(false, Player.Hand, nameof(Player));
-				ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
+				ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+				ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 				if (!Player.Hand.IsBust)
 				{
@@ -109,7 +118,7 @@ namespace BlackJack
 			}
 
 			//ディーラーターン
-			while (!Dealer.IsFinishedDraw)
+			while (!Dealer.IsFinishedDealerTurn)
 			{
 				try 
 				{
@@ -123,8 +132,8 @@ namespace BlackJack
 
 				if (Dealer.Hand.IsBust)
 				{
-					ShowPointsAndHand(false, Player.Hand, nameof(Player));
-					ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+					ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+					ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 					ShowBustMessage(nameof(Dealer));
 					ShowResultMessage(Result.Win);
@@ -135,8 +144,8 @@ namespace BlackJack
 			}
 
 			//勝負
-			ShowPointsAndHand(false, Player.Hand, nameof(Player));
-			ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 			var result = GetResult();
 			ShowResultMessage(result);
@@ -262,11 +271,18 @@ namespace BlackJack
 		/// <summary>
 		/// 点数と手札表示
 		/// </summary>
-		private void ShowPointsAndHand(bool isDealerFirstDraw, Hand playersHand, string player)
+		private void ShowPointsAndHand(GamePlayer gamePlayer, Hand playersHand, string player)
 		{
 			Write($"{player}: ");
 
-			if (!isDealerFirstDraw)
+			if (gamePlayer == GamePlayer.Dealer && !Dealer.IsFinishedStartDealerDraw)
+			{
+				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
+
+				Write($"[{playersHand.HandCards.FirstOrDefault().Mark} {playersHand.HandCards.FirstOrDefault().DisplayNumber}]");
+				WriteLine();
+			}
+			else
 			{
 				Write($" Total:{playersHand.Points} ");
 
@@ -274,13 +290,6 @@ namespace BlackJack
 				{
 					Write($"[{card.Mark} {card.DisplayNumber}]");
 				}
-				WriteLine();
-			}
-			else
-			{
-				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
-
-				Write($"[{playersHand.HandCards.FirstOrDefault().Mark} {playersHand.HandCards.FirstOrDefault().DisplayNumber}]");
 				WriteLine();
 			}
 		}
