@@ -1,5 +1,6 @@
 ﻿using static System.Console;
 using System.Linq;
+using System;
 
 namespace BlackJack
 {
@@ -11,6 +12,23 @@ namespace BlackJack
 		Win,
 		Lose,
 		Draw
+	}
+	/// <summary>
+	/// 手番
+	/// </summary>
+	enum Turn
+	{
+		None,
+		PlayerTurn,
+		DealerTurn,
+	}
+	/// <summary>
+	/// ゲームプレイヤー
+	/// </summary>
+	enum GamePlayer
+	{
+		Player,
+		Dealer
 	}
 
 	class Game
@@ -31,6 +49,10 @@ namespace BlackJack
 		/// リスタート有無
 		/// </summary>
 		bool IsRestartGame { get; set; }
+		/// <summary>
+		/// 手番
+		/// </summary>
+		Turn Turn { get; set; }
 
 		/// <summary>
 		/// コンストラクタ
@@ -50,33 +72,84 @@ namespace BlackJack
 		public bool Run()
 		{
 			//ゲーム初期化
-			Player.InitializePlayer();
-			Dealer.InitializeDealer();
+			Player.InitializeHand();
+			Dealer.InitializeHand();
 			Deck.InitializeDeckList();
 			IsRestartGame = false;
+			Turn = Turn.None;
 
 			//開始ドロー
-			Player.DrawCard(Deck.DrawnCard());
-			Player.DrawCard(Deck.DrawnCard());
-			Dealer.DrawCard(Deck.DrawnCard());
-			Dealer.DrawCard(Deck.DrawnCard());
+			if (!Deck.HasDeckRunOut)
+			{
+				Player.DrawCard(Deck.DrawCard());
+			}
+			else
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+				return IsRestartGame;
+			}
+
+			if (!Deck.HasDeckRunOut)
+			{
+				 Player.DrawCard(Deck.DrawCard()); 
+			}
+			else
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+				return IsRestartGame;
+			}
+
+			if (!Deck.HasDeckRunOut)
+			{
+				Dealer.DrawCard(Deck.DrawCard());
+			}
+			else
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+				return IsRestartGame;
+			}
+
+			if (!Deck.HasDeckRunOut)
+			{
+				Dealer.DrawCard(Deck.DrawCard());
+			}
+			else
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+				return IsRestartGame;
+			}
 
 			//表示
-			ShowPointsAndHand(false, Player.Hand, nameof(Player));
-			ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
+			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 			//プレイヤーターン
-			SetPlayerAction();
-			while (Player.PlayerAction == PlayerAction.Hit)
-			{
-				Player.DrawCard(Deck.DrawnCard());
+			Turn = Turn.PlayerTurn;
+			var playerAction = GetPlayerAction();
 
-				ShowPointsAndHand(false, Player.Hand, nameof(Player));
-				ShowPointsAndHand(true, Dealer.Hand, nameof(Dealer));
+			while (playerAction == PlayerAction.Hit)
+			{
+				if (!Deck.HasDeckRunOut)
+				{
+					Player.DrawCard(Deck.DrawCard());
+				}
+				else
+				{
+					ShowDeckRunsOutMessage();
+					SetIsRestartGame();
+					return IsRestartGame;
+				}
+
+				ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+				ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 				if (!Player.Hand.IsBust)
 				{
-					SetPlayerAction();
+					playerAction = GetPlayerAction();
 				}
 				else break;
 			}
@@ -92,13 +165,25 @@ namespace BlackJack
 			}
 
 			//ディーラーターン
-			while (!Dealer.IsFinishedDraw)
+			Turn = Turn.DealerTurn;
+
+			while (!Dealer.IsFinishedDealerDraw)
 			{
-				Dealer.DrawCard(Deck.DrawnCard());
+				if (!Deck.HasDeckRunOut)
+				{
+					Dealer.DrawCard(Deck.DrawCard());
+				}
+				else
+				{
+					ShowDeckRunsOutMessage();
+					SetIsRestartGame();
+					return IsRestartGame;
+				}
+
 				if (Dealer.Hand.IsBust)
 				{
-					ShowPointsAndHand(false, Player.Hand, nameof(Player));
-					ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+					ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+					ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 					ShowBustMessage(nameof(Dealer));
 					ShowResultMessage(Result.Win);
@@ -109,8 +194,8 @@ namespace BlackJack
 			}
 
 			//勝負
-			ShowPointsAndHand(false, Player.Hand, nameof(Player));
-			ShowPointsAndHand(false, Dealer.Hand, nameof(Dealer));
+			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
+			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 			var result = GetResult();
 			ShowResultMessage(result);
@@ -129,6 +214,14 @@ namespace BlackJack
 		}
 
 		/// <summary>
+		/// 山札切れメッセージ出力
+		/// </summary>
+		private void ShowDeckRunsOutMessage()
+		{
+			WriteLine("山札にカードがありません。");
+		}
+
+		/// <summary>
 		/// ヒットするかスタンドするかを確認する
 		/// </summary>
 		/// <returns></returns>
@@ -141,17 +234,18 @@ namespace BlackJack
 
 			return inputKey;
 		}
+
 		/// <summary>
-		/// ヒットかスタンドかを設定する
+		/// ヒットしたかスタンドしたかを取得する
 		/// </summary>
-		private void SetPlayerAction()
+		private PlayerAction GetPlayerAction()
 		{
 			var inputKey = ComfirmHitOrStand();
 
 			while (!(inputKey == "h" || inputKey == "s")) inputKey = ComfirmHitOrStand();
 
-			if (inputKey == "h") Player.PlayerAction = PlayerAction.Hit;
-			else Player.PlayerAction = PlayerAction.Stand;
+			if (inputKey == "h") return PlayerAction.Hit;
+			else return PlayerAction.Stand;
 		}
 
 		/// <summary>
@@ -203,7 +297,7 @@ namespace BlackJack
 		private void ShowBustMessage(string player)
 		{
 			WriteLine($"{player}はバーストしました。");
-		}
+		}	
 
 		/// <summary>
 		/// 勝者、敗者メッセージ
@@ -228,11 +322,18 @@ namespace BlackJack
 		/// <summary>
 		/// 点数と手札表示
 		/// </summary>
-		private void ShowPointsAndHand(bool isDealerFirstDraw, Hand playersHand, string player)
+		private void ShowPointsAndHand(GamePlayer gamePlayer, Hand playersHand, string player)
 		{
 			Write($"{player}: ");
 
-			if (!isDealerFirstDraw)
+			if (gamePlayer == GamePlayer.Dealer && Turn != Turn.DealerTurn)
+			{
+				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
+
+				Write($"[{playersHand.HandCards.FirstOrDefault().Mark} {playersHand.HandCards.FirstOrDefault().DisplayNumber}]");
+				WriteLine();
+			}
+			else
 			{
 				Write($" Total:{playersHand.Points} ");
 
@@ -240,13 +341,6 @@ namespace BlackJack
 				{
 					Write($"[{card.Mark} {card.DisplayNumber}]");
 				}
-				WriteLine();
-			}
-			else
-			{
-				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
-
-				Write($"[{playersHand.HandCards.FirstOrDefault().Mark} {playersHand.HandCards.FirstOrDefault().DisplayNumber}]");
 				WriteLine();
 			}
 		}

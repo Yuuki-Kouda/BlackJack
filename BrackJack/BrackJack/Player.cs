@@ -7,27 +7,26 @@
 		Stand
 	}
 
-	class Player : AbstractPlayer
+	class Player
 	{
 		/// <summary>
-		/// プレイヤーコール
+		/// 手札
 		/// </summary>
-		public PlayerAction PlayerAction { get; set; }
+		public Hand Hand { get; set; }
 
 		/// <summary>
-		/// プレイヤー初期化
+		/// 手札初期化
 		/// </summary>
-		public void InitializePlayer()
+		public void InitializeHand()
 		{
 			Hand = new Hand();
-			PlayerAction = PlayerAction.None;
 		}
 
 		/// <summary>
 		/// プレイヤードローカード
 		/// </summary>
 		/// <param name="card"></param>
-		public override void DrawCard(Card card)
+		public virtual void DrawCard(Card card)
 		{
 			Hand.AddCard(card);
 			Hand.CaluculatePoints();

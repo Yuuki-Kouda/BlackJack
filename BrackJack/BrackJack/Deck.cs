@@ -13,6 +13,20 @@ namespace BlackJack
 		/// 山札
 		/// </summary>
 		List<Card> DeckList { get; set; }
+		/// <summary>
+		/// 山札にカードがあるかどうか
+		/// </summary>
+		public bool HasDeckRunOut
+		{
+			get
+			{
+				if (DeckList.Count == 0) return true;
+				else return false;
+			}
+		}
+
+		//定数
+		private readonly int Thirteen = 13;
 
 		/// <summary>
 		/// トランプ生成
@@ -33,7 +47,7 @@ namespace BlackJack
 		{
 			List<Card> cardList = new List<Card>();
 
-			for (int i = 1; i <= 13; i++)
+			for (int i = 1; i <= Thirteen; i++)
 			{
 				cardList.Add(CreateCard(Suit.Heart, i));
 				cardList.Add(CreateCard(Suit.Spade, i));
@@ -48,12 +62,12 @@ namespace BlackJack
 		/// ドロー
 		/// </summary>
 		/// <returns></returns>
-		public Card DrawnCard()
+		public Card DrawCard()
 		{
-			var drawnCard = DeckList.FirstOrDefault(); 
-			DeckList.Remove(drawnCard);
+			var card = DeckList.FirstOrDefault();
+			DeckList.Remove(card);
 
-			return drawnCard;
+			return card;
 		}
 	}
 }
