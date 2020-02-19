@@ -21,7 +21,6 @@ namespace BlackJack
 		None,
 		PlayerTurn,
 		DealerTurn,
-		End
 	}
 	/// <summary>
 	/// ゲームプレイヤー
@@ -195,7 +194,6 @@ namespace BlackJack
 			}
 
 			//勝負
-			Turn = Turn.End;
 			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
 			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
@@ -299,7 +297,7 @@ namespace BlackJack
 		private void ShowBustMessage(string player)
 		{
 			WriteLine($"{player}はバーストしました。");
-		}
+		}	
 
 		/// <summary>
 		/// 勝者、敗者メッセージ
@@ -328,7 +326,7 @@ namespace BlackJack
 		{
 			Write($"{player}: ");
 
-			if (gamePlayer == GamePlayer.Dealer && Turn != Turn.End)
+			if (gamePlayer == GamePlayer.Dealer && Turn != Turn.DealerTurn)
 			{
 				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
 
