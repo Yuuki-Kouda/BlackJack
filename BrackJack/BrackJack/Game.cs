@@ -13,7 +13,15 @@ namespace BlackJack
 		Lose,
 		Draw
 	}
-
+	/// <summary>
+	/// 手番
+	/// </summary>
+	enum Turn
+	{
+		None,
+		PlayerTurn,
+		DealerTurn
+	}
 	/// <summary>
 	/// ゲームプレイヤー
 	/// </summary>
@@ -41,6 +49,10 @@ namespace BlackJack
 		/// リスタート有無
 		/// </summary>
 		bool IsRestartGame { get; set; }
+		/// <summary>
+		/// 手番
+		/// </summary>
+		Turn Turn { get; set; }
 
 		/// <summary>
 		/// コンストラクタ
@@ -64,6 +76,7 @@ namespace BlackJack
 			Dealer.InitializeHand();
 			Deck.InitializeDeckList();
 			IsRestartGame = false;
+			Turn = Turn.None;
 
 			//開始ドロー
 			if (!Deck.HasDeckRunOut)
@@ -115,8 +128,10 @@ namespace BlackJack
 			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
 
 			//プレイヤーターン
-			SetPlayerAction();
-			while (Player.PlayerAction == PlayerAction.Hit)
+			Turn = Turn.PlayerTurn;
+			var playerAction = SetPlayerAction();
+
+			while (playerAction == PlayerAction.Hit)
 			{
 				if (!Deck.HasDeckRunOut)
 				{
@@ -150,6 +165,8 @@ namespace BlackJack
 			}
 
 			//ディーラーターン
+			Turn = Turn.DealerTurn;
+
 			while (!Dealer.IsFinishedDealerTurn)
 			{
 				if (!Deck.HasDeckRunOut)
