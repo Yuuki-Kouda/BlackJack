@@ -326,7 +326,7 @@ namespace BlackJack
 		{
 			Write($"{player}: ");
 
-			if (gamePlayer == GamePlayer.Dealer && !Dealer.IsFinishedStartDealerDraw)
+			if (gamePlayer == GamePlayer.Dealer && Turn != Turn.DealerTurn)
 			{
 				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
 
