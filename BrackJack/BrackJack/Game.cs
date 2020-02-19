@@ -60,8 +60,8 @@ namespace BlackJack
 		public bool Run()
 		{
 			//ゲーム初期化
-			Player.InitializePlayer();
-			Dealer.InitializeDealer();
+			Player.InitializeHand();
+			Dealer.InitializeHand();
 			Deck.InitializeDeckList();
 			IsRestartGame = false;
 

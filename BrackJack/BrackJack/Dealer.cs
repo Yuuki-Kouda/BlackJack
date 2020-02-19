@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackJack
 {
-	class Dealer : AbstractPlayer
+	class Dealer : Player
 	{
 		/// <summary>
 		/// ディーラーが開始時ドローを引いている最中、または引いた直後か
@@ -34,14 +34,6 @@ namespace BlackJack
 		//定数
 		private readonly int Two = 2;
 		private readonly int Seventeen = 17;
-
-		/// <summary>
-		/// ディーラー初期化
-		/// </summary>
-		public void InitializeDealer()
-		{
-			Hand = new Hand();
-		}
 
 		/// <summary>
 		/// ディーラーがカードを引く処理
