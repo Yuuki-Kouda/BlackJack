@@ -67,9 +67,6 @@ namespace BlackJack
 			var card = DeckList.FirstOrDefault();
 			DeckList.Remove(card);
 
-			List<Card> list = new List<Card>();
-			list.Remove(card);
-
 			return card;
 		}
 	}
