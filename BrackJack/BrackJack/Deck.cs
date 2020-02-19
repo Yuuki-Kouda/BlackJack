@@ -13,6 +13,17 @@ namespace BlackJack
 		/// 山札
 		/// </summary>
 		List<Card> DeckList { get; set; }
+		/// <summary>
+		/// 山札にカードがあるかどうか
+		/// </summary>
+		public bool HasDeckRunOut
+		{
+			get
+			{
+				if (DeckList.Count == 0) return true;
+				else return false;
+			}
+		}
 
 		//定数
 		private readonly int Thirteen = 13;
@@ -54,10 +65,10 @@ namespace BlackJack
 		public Card DrawCard()
 		{
 			var card = DeckList.FirstOrDefault();
+			DeckList.Remove(card);
 
-			//山札にカードがない場合は例外をスロー
-			if (card == null) throw new ArgumentNullException();
-			else DeckList.Remove(card);
+			List<Card> list = new List<Card>();
+			list.Remove(card);
 
 			return card;
 		}

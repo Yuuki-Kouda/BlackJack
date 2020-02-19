@@ -66,17 +66,48 @@ namespace BlackJack
 			IsRestartGame = false;
 
 			//開始ドロー
-			try
+			if (!Deck.HasDeckRunOut)
 			{
 				Player.DrawCard(Deck.DrawCard());
-				Player.DrawCard(Deck.DrawCard());
-				Dealer.DrawCard(Deck.DrawCard());
-				Dealer.DrawCard(Deck.DrawCard());
 			}
-			catch(ArgumentNullException)
+			else
 			{
 				ShowDeckRunsOutMessage();
 				SetIsRestartGame();
+				return IsRestartGame;
+			}
+
+			if (!Deck.HasDeckRunOut)
+			{
+				 Player.DrawCard(Deck.DrawCard()); 
+			}
+			else
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+				return IsRestartGame;
+			}
+
+			if (!Deck.HasDeckRunOut)
+			{
+				Dealer.DrawCard(Deck.DrawCard());
+			}
+			else
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+				return IsRestartGame;
+			}
+
+			if (!Deck.HasDeckRunOut)
+			{
+				Dealer.DrawCard(Deck.DrawCard());
+			}
+			else
+			{
+				ShowDeckRunsOutMessage();
+				SetIsRestartGame();
+				return IsRestartGame;
 			}
 
 			//表示
@@ -87,14 +118,15 @@ namespace BlackJack
 			SetPlayerAction();
 			while (Player.PlayerAction == PlayerAction.Hit)
 			{
-				try
+				if (!Deck.HasDeckRunOut)
 				{
 					Player.DrawCard(Deck.DrawCard());
 				}
-				catch (ArgumentNullException)
+				else
 				{
 					ShowDeckRunsOutMessage();
 					SetIsRestartGame();
+					return IsRestartGame;
 				}
 
 				ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
@@ -120,14 +152,15 @@ namespace BlackJack
 			//ディーラーターン
 			while (!Dealer.IsFinishedDealerTurn)
 			{
-				try 
+				if (!Deck.HasDeckRunOut)
 				{
 					Dealer.DrawCard(Deck.DrawCard());
 				}
-				catch(ArgumentNullException)
+				else
 				{
 					ShowDeckRunsOutMessage();
 					SetIsRestartGame();
+					return IsRestartGame;
 				}
 
 				if (Dealer.Hand.IsBust)
