@@ -9,6 +9,7 @@ namespace BlackJack
 	/// </summary>
 	enum Result
 	{
+		None,
 		Win,
 		Lose,
 		Draw
