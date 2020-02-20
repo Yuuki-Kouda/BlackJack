@@ -127,7 +127,7 @@ namespace BlackJack
 				}
 			}
 
-			//結果
+			//結果確認
 			ComfirmResult();
 
 			//再ゲームするか確認
@@ -197,12 +197,12 @@ namespace BlackJack
 
 			var inputKey = ComfirmInputKey();
 
-			while (!(inputKey == "h" || inputKey == "s")) 
+			while (!(inputKey == "h" || inputKey == "s"))
 			{
 				WriteLine();
 				Write(ShowText);
 				inputKey = ComfirmInputKey();
-			} 
+			}
 
 			if (inputKey == "h") return PlayerAction.Hit;
 			else return PlayerAction.Stand;
@@ -277,7 +277,7 @@ namespace BlackJack
 		/// </summary>
 		private void ShowPointsAndHand(Player player)
 		{
-			if(player == Player) Write("Player: ");
+			if (player == Player) Write("Player: ");
 			else Write("Dealer: ");
 
 			if (player == Dealer && Turn != Turn.DealerTurn)
