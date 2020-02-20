@@ -26,7 +26,7 @@ namespace BlackJack
 		}
 
 		//定数
-		private readonly int Thirteen = 13;
+		public readonly int MinimumNumberOfCard = 24;
 
 		/// <summary>
 		/// トランプ生成
@@ -47,7 +47,7 @@ namespace BlackJack
 		{
 			List<Card> cardList = new List<Card>();
 
-			for (int i = 1; i <= Thirteen; i++)
+			for (int i = 1; i <= 13; i++)
 			{
 				cardList.Add(CreateCard(Suit.Heart, i));
 				cardList.Add(CreateCard(Suit.Spade, i));

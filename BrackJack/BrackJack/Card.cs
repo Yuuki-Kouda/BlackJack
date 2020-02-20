@@ -33,6 +33,9 @@
 		/// </summary>
 		public Suit Mark { get; }
 
+		//定数
+		public int SpecialAcePoint = 11;
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>

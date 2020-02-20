@@ -15,13 +15,12 @@ namespace BlackJack
 		{
 			get
 			{
-				if (Hand.Points >= Seventeen) return true;
+				if (Hand.Points >= PointsDealerCanDraw) return true;
 				else return false;
 			}
 		}
 
 		//定数
-		private readonly int Seventeen = 17;
 
 		/// <summary>
 		/// ディーラーがカードを引く処理
@@ -33,5 +32,6 @@ namespace BlackJack
 			Hand.AddCard(card);
 			Hand.CaluculatePoints();
 		}
+		private readonly int PointsDealerCanDraw = 17;
 	}
 }

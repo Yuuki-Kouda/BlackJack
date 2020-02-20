@@ -20,14 +20,13 @@ namespace BlackJack
 		{ 
 			get
 			{
-				if (Points > Twentyone) return true;
+				if (Points > BlackJackPoints) return true;
 				else return false;
 			} 
 		}
 
 		//定数
-		private readonly int Twentyone = 21;
-		private readonly int Eleven = 11;
+		public readonly int BlackJackPoints = 21;
 
 		/// <summary>
 		/// カード追加
