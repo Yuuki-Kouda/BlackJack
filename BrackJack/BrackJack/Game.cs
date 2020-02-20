@@ -199,15 +199,24 @@ namespace BlackJack
 			ShowResultMessage(result);
 		}
 
-
 		/// <summary>
-		/// ヒットしたかスタンドしたかを取得する
+		/// ヒットしたかスタンドしたかを確認する
 		/// </summary>
-		private PlayerAction GetPlayerAction()
+		private PlayerAction ComfirmPlayerAction()
 		{
-			var inputKey = ComfirmHitOrStand();
+			var ShowText = "ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ";
 
-			while (!(inputKey == "h" || inputKey == "s")) inputKey = ComfirmHitOrStand();
+			WriteLine();
+			Write(ShowText);
+
+			var inputKey = ComfirmInputKey();
+
+			while (!(inputKey == "h" || inputKey == "s")) 
+			{
+				WriteLine();
+				Write(ShowText);
+				inputKey = ComfirmInputKey();
+			} 
 
 			if (inputKey == "h") return PlayerAction.Hit;
 			else return PlayerAction.Stand;
