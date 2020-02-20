@@ -22,14 +22,6 @@ namespace BlackJack
 		PlayerTurn,
 		DealerTurn,
 	}
-	/// <summary>
-	/// ゲームプレイヤー
-	/// </summary>
-	enum GamePlayer
-	{
-		Player,
-		Dealer
-	}
 
 	class Game
 	{
@@ -198,32 +190,15 @@ namespace BlackJack
 			ShowPointsAndHand(Player);
 			ShowPointsAndHand(Dealer);
 
-		/// <summary>
-		/// 山札切れメッセージ出力
-		/// </summary>
-		private void ShowDeckRunsOutMessage()
-		{
-			WriteLine("山札にカードがありません。");
-		}
 			var result = Result.None;
 
-		/// <summary>
-		/// ヒットするかスタンドするかを確認する
-		/// </summary>
-		/// <returns></returns>
-		private string ComfirmHitOrStand()
-		{
-			WriteLine();
-			Write("ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ");
-			var inputKey = ReadLine();
-			WriteLine();
 			if (Player.Hand.Points > Dealer.Hand.Points) result = Result.Win;
 			else if (Player.Hand.Points < Dealer.Hand.Points) result = Result.Lose;
 			else result = Result.Draw;
 
-			return inputKey;
 			ShowResultMessage(result);
 		}
+
 
 		/// <summary>
 		/// ヒットしたかスタンドしたかを取得する
