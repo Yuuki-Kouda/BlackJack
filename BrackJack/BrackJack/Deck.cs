@@ -15,7 +15,7 @@ namespace BlackJack
 		public List<Card> DeckList { get; set; } = new List<Card>();
 
 		//定数
-		public readonly int MinimumNumberOfCard = 24;
+		public readonly int MinimumNumberOfDeck = 24;
 
 		/// <summary>
 		/// コンストラクタ
@@ -30,7 +30,7 @@ namespace BlackJack
 		/// </summary>
 		public void AttemptInitializeDeckList()
 		{
-			if (DeckList.Count < MinimumNumberOfCard) InitializeDeckList();
+			if (DeckList.Count < MinimumNumberOfDeck) InitializeDeckList();
 		}
 
 		/// <summary>
