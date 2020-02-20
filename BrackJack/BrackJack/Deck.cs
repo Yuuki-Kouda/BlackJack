@@ -13,17 +13,6 @@ namespace BlackJack
 		/// 山札
 		/// </summary>
 		public List<Card> DeckList { get; set; } = new List<Card>();
-		/// <summary>
-		/// 山札にカードがあるかどうか
-		/// </summary>
-		public bool HasDeckRunOut
-		{
-			get
-			{
-				if (DeckList.Count == 0) return true;
-				else return false;
-			}
-		}
 
 		//定数
 		public readonly int MinimumNumberOfCard = 24;
