@@ -11,7 +11,7 @@ namespace BlackJack
 		/// <summary>
 		/// ディーラーの点数は17以上か
 		/// </summary>
-		public bool IsFinishedDealerDraw 
+		public bool CanDraw 
 		{
 			get
 			{
