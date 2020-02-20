@@ -79,16 +79,53 @@ namespace BlackJack
 			FirstDraw();
 
 			//プレイヤーターン
-			PlayerTurn();
+			Turn = Turn.PlayerTurn;
+			var playerAction = ComfirmPlayerAction();
 
-			//リスタート有無がtrueなら再ゲーム
-			if (IsRestartGame) return IsRestartGame;
+			while (playerAction == PlayerAction.Hit)
+			{
+				Player.DrawCard(Deck);
+
+				ShowPointsAndHand(Player);
+				ShowPointsAndHand(Dealer);
+
+				if (!Player.Hand.IsBust)
+				{
+					playerAction = ComfirmPlayerAction();
+				}
+				else break;
+			}
+
+			//バースト確認
+			if (Player.Hand.IsBust)
+			{
+				ShowBustMessage(Player);
+				ShowResultMessage(Result.Lose);
+
+				isRestartGame = ComfirmRestartGame();
+				if (isRestartGame) return isRestartGame;
+			}
 
 			//ディーラーターン
-			DealerTurn();
+			Turn = Turn.DealerTurn;
 
-			//リスタート有無がtrueなら再ゲーム
-			if (IsRestartGame) return IsRestartGame;
+			while (!Dealer.CanDraw)
+			{
+				Dealer.DrawCard(Deck);
+
+				//バースト確認
+				if (Dealer.Hand.IsBust)
+				{
+					ShowPointsAndHand(Player);
+					ShowPointsAndHand(Dealer);
+
+					ShowBustMessage(Dealer);
+					ShowResultMessage(Result.Win);
+
+					isRestartGame = ComfirmRestartGame();
+					if (isRestartGame) return isRestartGame;
+				}
+			}
 
 			//結果
 			ComfirmResult();
@@ -129,70 +166,6 @@ namespace BlackJack
 
 			ShowPointsAndHand(Player);
 			ShowPointsAndHand(Dealer);
-		}
-
-		/// <summary>
-		/// プレイヤーターン
-		/// </summary>
-		/// <param name="inputKey"></param>
-		private void PlayerTurn()
-		{
-			Turn = Turn.PlayerTurn;
-			var playerAction = ComfirmPlayerAction();
-
-			while (playerAction == PlayerAction.Hit)
-			{
-				Player.DrawCard(Deck);
-
-				ShowPointsAndHand(Player);
-				ShowPointsAndHand(Dealer);
-
-				if (!Player.Hand.IsBust)
-				{
-					playerAction = ComfirmPlayerAction();
-				}
-				else break;
-			}
-
-			//バースト
-			if (Player.Hand.IsBust)
-			{
-				ShowBustMessage(nameof(Player));
-				ShowResultMessage(Result.Lose);
-
-				ComfirmRestartGame();
-			}
-		}
-
-		/// <summary>
-		/// ディーラーターン
-		/// </summary>
-		private void DealerTurn()
-		{
-			Turn = Turn.DealerTurn;
-
-			while (!Dealer.IsFinishedDealerDraw)
-			{
-				if (!Deck.HasDeckRunOut)
-				{
-					Dealer.DrawCard(Deck);
-				}
-				else
-				{
-					ComfirmRestartGame();
-				}
-
-				if (Dealer.Hand.IsBust)
-				{
-					ShowPointsAndHand(Player);
-					ShowPointsAndHand(Dealer);
-
-					ShowBustMessage(nameof(Dealer));
-					ShowResultMessage(Result.Win);
-
-					ComfirmRestartGame();
-				}
-			}
 		}
 
 		/// <summary>
