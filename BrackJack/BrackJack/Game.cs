@@ -39,10 +39,6 @@ namespace BlackJack
 		/// </summary>
 		Deck Deck { get; set; }
 		/// <summary>
-		/// リスタート有無
-		/// </summary>
-		bool IsRestartGame { get; set; }
-		/// <summary>
 		/// 手番
 		/// </summary>
 		Turn Turn { get; set; }
@@ -64,6 +60,9 @@ namespace BlackJack
 
 		public bool Run()
 		{
+			//リスタート有無
+			var isRestartGame = false;
+
 			//ゲーム初期化
 			InitializeGame();
 
