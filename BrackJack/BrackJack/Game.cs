@@ -72,84 +72,71 @@ namespace BlackJack
 		public bool Run()
 		{
 			//ゲーム初期化
-			Player.InitializeHand();
-			Dealer.InitializeHand();
-			Deck.InitializeDeckList();
-			IsRestartGame = false;
-			Turn = Turn.None;
+			InitializeGame();
 
 			//開始ドロー
-			if (!Deck.HasDeckRunOut)
-			{
-				Player.DrawCard(Deck.DrawCard());
-			}
-			else
-			{
-				ShowDeckRunsOutMessage();
-				SetIsRestartGame();
-				return IsRestartGame;
-			}
-
-			if (!Deck.HasDeckRunOut)
-			{
-				 Player.DrawCard(Deck.DrawCard()); 
-			}
-			else
-			{
-				ShowDeckRunsOutMessage();
-				SetIsRestartGame();
-				return IsRestartGame;
-			}
-
-			if (!Deck.HasDeckRunOut)
-			{
-				Dealer.DrawCard(Deck.DrawCard());
-			}
-			else
-			{
-				ShowDeckRunsOutMessage();
-				SetIsRestartGame();
-				return IsRestartGame;
-			}
-
-			if (!Deck.HasDeckRunOut)
-			{
-				Dealer.DrawCard(Deck.DrawCard());
-			}
-			else
-			{
-				ShowDeckRunsOutMessage();
-				SetIsRestartGame();
-				return IsRestartGame;
-			}
-
-			//表示
-			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
-			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
+			FirstDraw();
 
 			//プレイヤーターン
+			PlayerTurn();
+			if (IsRestartGame) return IsRestartGame;
+
+			//ディーラーターン
+			DealerTurn();
+			if (IsRestartGame) return IsRestartGame;
+
+			//結果
+			ComfirmResult();
+
+			//再ゲームするか確認
+			ComfirmRestartGame();
+			return IsRestartGame;
+		}
+
+
+		/// <summary>
+		/// Game初期化
+		/// </summary>
+		private void InitializeGame()
+		{
+			Player.InitializeHand();
+			Dealer.InitializeHand();
+			Deck.AttemptInitializeDeckList();
+		}
+
+		/// <summary>
+		/// ゲーム開始時ドロー
+		/// </summary>
+		private void FirstDraw()
+		{
+			Player.DrawCard(Deck);
+			Player.DrawCard(Deck);
+			Dealer.DrawCard(Deck);
+			Dealer.DrawCard(Deck);
+
+			ShowPointsAndHand(Player);
+			ShowPointsAndHand(Dealer);
+		}
+
+		/// <summary>
+		/// プレイヤーターン
+		/// </summary>
+		/// <param name="inputKey"></param>
+		private void PlayerTurn()
+		{
 			Turn = Turn.PlayerTurn;
-			var playerAction = GetPlayerAction();
+			var playerAction = ComfirmPlayerAction();
 
 			while (playerAction == PlayerAction.Hit)
 			{
-				if (!Deck.HasDeckRunOut)
-				{
-					Player.DrawCard(Deck.DrawCard());
-				}
-				else
-				{
-					ShowDeckRunsOutMessage();
-					SetIsRestartGame();
-					return IsRestartGame;
-				}
+				Player.DrawCard(Deck);
 
-				ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
-				ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
+				ShowPointsAndHand(Player);
+				ShowPointsAndHand(Dealer);
 
 				if (!Player.Hand.IsBust)
 				{
-					playerAction = GetPlayerAction();
+					playerAction = ComfirmPlayerAction();
 				}
 				else break;
 			}
@@ -160,58 +147,53 @@ namespace BlackJack
 				ShowBustMessage(nameof(Player));
 				ShowResultMessage(Result.Lose);
 
-				SetIsRestartGame();
-				return IsRestartGame;
+				ComfirmRestartGame();
 			}
+		}
 
-			//ディーラーターン
+		/// <summary>
+		/// ディーラーターン
+		/// </summary>
+		private void DealerTurn()
+		{
 			Turn = Turn.DealerTurn;
 
 			while (!Dealer.IsFinishedDealerDraw)
 			{
 				if (!Deck.HasDeckRunOut)
 				{
-					Dealer.DrawCard(Deck.DrawCard());
+					Dealer.DrawCard(Deck);
 				}
 				else
 				{
-					ShowDeckRunsOutMessage();
-					SetIsRestartGame();
-					return IsRestartGame;
+					ComfirmRestartGame();
 				}
 
 				if (Dealer.Hand.IsBust)
 				{
-					ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
-					ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
+					ShowPointsAndHand(Player);
+					ShowPointsAndHand(Dealer);
 
 					ShowBustMessage(nameof(Dealer));
 					ShowResultMessage(Result.Win);
 
-					SetIsRestartGame();
-					return IsRestartGame;
+					ComfirmRestartGame();
 				}
 			}
-
-			//勝負
-			ShowPointsAndHand(GamePlayer.Player, Player.Hand, nameof(Player));
-			ShowPointsAndHand(GamePlayer.Dealer, Dealer.Hand, nameof(Dealer));
-
-			var result = GetResult();
-			ShowResultMessage(result);
-
-			SetIsRestartGame();
-			return IsRestartGame;
 		}
 
 		/// <summary>
 		/// 開始メッセージ出力
+		/// 結果確認
 		/// </summary>
 		private void ShowStartMessage()
+		private void ComfirmResult()
 		{
 			WriteLine("ブラックジャックゲームへようこそ");
 			WriteLine();
 		}
+			ShowPointsAndHand(Player);
+			ShowPointsAndHand(Dealer);
 
 		/// <summary>
 		/// 山札切れメッセージ出力
@@ -220,6 +202,7 @@ namespace BlackJack
 		{
 			WriteLine("山札にカードがありません。");
 		}
+			var result = Result.None;
 
 		/// <summary>
 		/// ヒットするかスタンドするかを確認する
@@ -231,8 +214,12 @@ namespace BlackJack
 			Write("ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ");
 			var inputKey = ReadLine();
 			WriteLine();
+			if (Player.Hand.Points > Dealer.Hand.Points) result = Result.Win;
+			else if (Player.Hand.Points < Dealer.Hand.Points) result = Result.Lose;
+			else result = Result.Draw;
 
 			return inputKey;
+			ShowResultMessage(result);
 		}
 
 		/// <summary>
