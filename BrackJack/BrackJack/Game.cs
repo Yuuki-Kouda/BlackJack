@@ -93,6 +93,14 @@ namespace BlackJack
 			return IsRestartGame;
 		}
 
+		/// <summary>
+		/// 開始メッセージ出力
+		/// </summary>
+		private void ShowStartMessage()
+		{
+			WriteLine("ブラックジャックゲームへようこそ");
+			WriteLine();
+		}
 
 		/// <summary>
 		/// Game初期化
@@ -183,15 +191,10 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// 開始メッセージ出力
 		/// 結果確認
 		/// </summary>
-		private void ShowStartMessage()
 		private void ComfirmResult()
 		{
-			WriteLine("ブラックジャックゲームへようこそ");
-			WriteLine();
-		}
 			ShowPointsAndHand(Player);
 			ShowPointsAndHand(Dealer);
 
