@@ -244,10 +244,13 @@ namespace BlackJack
 		/// バーストメッセージ表示
 		/// </summary>
 		/// <param name="user"></param>
-		private void ShowBustMessage(string player)
+		private void ShowBustMessage(Player player)
 		{
-			WriteLine($"{player}はバーストしました。");
-		}	
+			if(player == Player) 
+				WriteLine("Playerはバーストしました。");
+			else
+				WriteLine("Dealerはバーストしました。");
+		}
 
 		/// <summary>
 		/// 勝者、敗者メッセージ表示
