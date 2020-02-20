@@ -29,8 +29,19 @@ namespace BlackJack
 		public readonly int MinimumNumberOfCard = 24;
 
 		/// <summary>
+		/// コンストラクタ
 		/// </summary>
+		public Deck()
 		{
+			InitializeDeckList();
+		}
+
+		/// <summary>
+		/// デッキのシャッフルが必要であればシャッフルする
+		/// </summary>
+		public void AttemptInitializeDeckList()
+		{
+			if (DeckList.Count < MinimumNumberOfCard) InitializeDeckList();
 		}
 
 		/// <summary>
