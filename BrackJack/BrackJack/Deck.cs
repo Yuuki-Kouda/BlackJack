@@ -12,7 +12,7 @@ namespace BlackJack
 		/// <summary>
 		/// 山札
 		/// </summary>
-		List<Card> DeckList { get; set; }
+		public List<Card> DeckList { get; set; } = new List<Card>();
 		/// <summary>
 		/// 山札にカードがあるかどうか
 		/// </summary>
