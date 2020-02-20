@@ -21,17 +21,6 @@ namespace BlackJack
 		}
 
 		//定数
-
-		/// <summary>
-		/// ディーラーがカードを引く処理
-		/// </summary>
-		/// <param name="card"></param>
-		/// <param name="isFinishedDraw"></param>
-		public override void DrawCard(Card card)
-		{
-			Hand.AddCard(card);
-			Hand.CaluculatePoints();
-		}
 		private readonly int PointsDealerCanDraw = 17;
 	}
 }
