@@ -309,22 +309,23 @@ namespace BlackJack
 		/// <summary>
 		/// 点数と手札表示
 		/// </summary>
-		private void ShowPointsAndHand(GamePlayer gamePlayer, Hand playersHand, string player)
+		private void ShowPointsAndHand(Player player)
 		{
-			Write($"{player}: ");
+			if(player == Player) Write("Player: ");
+			else Write("Dealer: ");
 
-			if (gamePlayer == GamePlayer.Dealer && Turn != Turn.DealerTurn)
+			if (player == Dealer && Turn != Turn.DealerTurn)
 			{
-				Write($" Total:{playersHand.HandCards.FirstOrDefault().BlackJackNumber} ");
+				Write($" Total:{player.Hand.HandCards.FirstOrDefault().BlackJackNumber} ");
 
-				Write($"[{playersHand.HandCards.FirstOrDefault().Mark} {playersHand.HandCards.FirstOrDefault().DisplayNumber}]");
+				Write($"[{player.Hand.HandCards.FirstOrDefault().Mark} {player.Hand.HandCards.FirstOrDefault().DisplayNumber}]");
 				WriteLine();
 			}
 			else
 			{
-				Write($" Total:{playersHand.Points} ");
+				Write($" Total:{player.Hand.Points} ");
 
-				foreach (var card in playersHand.HandCards)
+				foreach (var card in player.Hand.HandCards)
 				{
 					Write($"[{card.Mark} {card.DisplayNumber}]");
 				}
