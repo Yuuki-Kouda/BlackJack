@@ -1,12 +1,5 @@
 ﻿namespace BlackJack
 {
-	enum PlayerAction
-	{
-		None,
-		Hit,
-		Stand
-	}
-
 	class Player
 	{
 		/// <summary>
@@ -23,12 +16,12 @@
 		}
 
 		/// <summary>
-		/// プレイヤードローカード
+		/// ドローカード
 		/// </summary>
 		/// <param name="card"></param>
-		public virtual void DrawCard(Card card)
-		{
-			Hand.AddCard(card);
+		public void DrawCard(Deck deck)
+		{			
+			Hand.AddCard(deck.DrawCard());
 			Hand.CaluculatePoints();
 		}
 	}

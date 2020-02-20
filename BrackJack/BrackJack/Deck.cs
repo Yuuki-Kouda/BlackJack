@@ -12,7 +12,7 @@ namespace BlackJack
 		/// <summary>
 		/// 山札
 		/// </summary>
-		List<Card> DeckList { get; set; }
+		public List<Card> DeckList { get; set; } = new List<Card>();
 		/// <summary>
 		/// 山札にカードがあるかどうか
 		/// </summary>
@@ -26,18 +26,22 @@ namespace BlackJack
 		}
 
 		//定数
-		private readonly int Thirteen = 13;
+		public readonly int MinimumNumberOfCard = 24;
 
 		/// <summary>
-		/// トランプ生成
+		/// コンストラクタ
 		/// </summary>
-		/// <param name="mark"></param>
-		/// <param name="number"></param>
-		/// <returns></returns>
-		private Card CreateCard(Suit mark, int number)
+		public Deck()
 		{
-			Card card = new Card(mark, number);
-			return card;
+			InitializeDeckList();
+		}
+
+		/// <summary>
+		/// デッキのシャッフルが必要であればシャッフルする
+		/// </summary>
+		public void AttemptInitializeDeckList()
+		{
+			if (DeckList.Count < MinimumNumberOfCard) InitializeDeckList();
 		}
 
 		/// <summary>
@@ -47,12 +51,17 @@ namespace BlackJack
 		{
 			List<Card> cardList = new List<Card>();
 
-			for (int i = 1; i <= Thirteen; i++)
+			for (int i = 1; i <= 13; i++)
 			{
-				cardList.Add(CreateCard(Suit.Heart, i));
-				cardList.Add(CreateCard(Suit.Spade, i));
-				cardList.Add(CreateCard(Suit.Diamond, i));
-				cardList.Add(CreateCard(Suit.Club, i));
+				Card heartCard = new Card(Suit.Heart, i);
+				Card spadeCard = new Card(Suit.Spade, i);
+				Card diamondCard = new Card(Suit.Diamond, i);
+				Card clubCard = new Card(Suit.Club, i);
+
+				cardList.Add(heartCard);
+				cardList.Add(spadeCard);
+				cardList.Add(diamondCard);
+				cardList.Add(clubCard);
 			}
 			//シャッフル
 			DeckList = cardList.OrderBy(i => Guid.NewGuid()).ToList();

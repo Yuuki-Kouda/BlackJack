@@ -20,14 +20,13 @@ namespace BlackJack
 		{ 
 			get
 			{
-				if (Points > Twentyone) return true;
+				if (Points > BlackJackPoints) return true;
 				else return false;
 			} 
 		}
 
 		//定数
-		private readonly int Twentyone = 21;
-		private readonly int Eleven = 11;
+		public readonly int BlackJackPoints = 21;
 
 		/// <summary>
 		/// カード追加
@@ -43,17 +42,17 @@ namespace BlackJack
 		/// </summary>
 		public void CaluculatePoints()
 		{
-			var aces = HandCards.Where(card => card.Number == 1).ToList();
+			var aces = HandCards.Where(card => card.Number == 1);
 
 			if (aces.Any())
 			{
 				//Aの初期化
 				aces.ToList().ForEach(ace => ace.BlackJackNumber = ace.Number);
 
-				var firstAceCard = aces.FirstOrDefault();
-				var differenceOfBlackJackNumber = Twentyone - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
+				var firstAceCard = aces.First();
+				var differenceOfBlackJackNumber = BlackJackPoints - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
 
-				if (Eleven <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = Eleven;
+				if (firstAceCard.SpecialAcePoint <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = firstAceCard.SpecialAcePoint;
 			}
 
 			Points = HandCards.Sum(card => card.BlackJackNumber);
