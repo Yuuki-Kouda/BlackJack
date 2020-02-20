@@ -23,6 +23,15 @@ namespace BlackJack
 		PlayerTurn,
 		DealerTurn,
 	}
+	/// <summary>
+	/// プレイヤーアクション
+	/// </summary>
+	enum PlayerAction
+	{
+		None,
+		Hit,
+		Stand
+	}
 
 	class Game
 	{

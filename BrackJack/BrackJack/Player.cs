@@ -1,12 +1,5 @@
 ﻿namespace BlackJack
 {
-	enum PlayerAction
-	{
-		None,
-		Hit,
-		Stand
-	}
-
 	class Player
 	{
 		/// <summary>
