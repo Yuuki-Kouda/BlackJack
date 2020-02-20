@@ -243,16 +243,11 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// 勝敗を取得する
 		/// 入力キーを確認する
 		/// </summary>
 		/// <returns></returns>
-		private Result GetResult()
 		private string ComfirmInputKey()
 		{
-			if (Player.Hand.Points > Dealer.Hand.Points) return Result.Win;
-			else if (Player.Hand.Points < Dealer.Hand.Points) return Result.Lose;
-			else return Result.Draw;
 			var inputKey = ReadLine();
 			WriteLine();
 
