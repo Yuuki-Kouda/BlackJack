@@ -223,29 +223,18 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// リスタートするか確認する
+		/// 再ゲームするか確認する
 		/// </summary>
-		/// <returns></returns>
-		private string ComfirmRestartGame()
+		private void ComfirmRestartGame()
 		{
 			var ShowText = "もう一度ゲームをする場合は\"r\"、ゲームを終了する場合は\"e\"を入力してEnter ";
 
 			WriteLine();
 			Write(ShowText);
-			var inputKey = ReadLine();
-			WriteLine();
 
-			return inputKey;
-		}
+			var inputKey = ComfirmInputKey();
 
-		/// <summary>
-		/// リスタート有無を設定する
-		/// </summary>
-		private void SetIsRestartGame()
-		{
-			var inputKey = ComfirmRestartGame();
-
-			while (!(inputKey == "r" || inputKey == "e")) inputKey = ComfirmRestartGame();
+			while (!(inputKey == "r" || inputKey == "e")) inputKey = ComfirmInputKey();
 
 			//ゲーム終了
 			if (inputKey == "e") return;
