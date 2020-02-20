@@ -152,6 +152,7 @@ namespace BlackJack
 			Player.InitializeHand();
 			Dealer.InitializeHand();
 			Deck.AttemptInitializeDeckList();
+			Turn = Turn.None;
 		}
 
 		/// <summary>
