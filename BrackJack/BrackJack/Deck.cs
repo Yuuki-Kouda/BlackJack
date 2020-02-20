@@ -29,15 +29,8 @@ namespace BlackJack
 		public readonly int MinimumNumberOfCard = 24;
 
 		/// <summary>
-		/// トランプ生成
 		/// </summary>
-		/// <param name="mark"></param>
-		/// <param name="number"></param>
-		/// <returns></returns>
-		private Card CreateCard(Suit mark, int number)
 		{
-			Card card = new Card(mark, number);
-			return card;
 		}
 
 		/// <summary>
@@ -49,10 +42,15 @@ namespace BlackJack
 
 			for (int i = 1; i <= 13; i++)
 			{
-				cardList.Add(CreateCard(Suit.Heart, i));
-				cardList.Add(CreateCard(Suit.Spade, i));
-				cardList.Add(CreateCard(Suit.Diamond, i));
-				cardList.Add(CreateCard(Suit.Club, i));
+				Card heartCard = new Card(Suit.Heart, i);
+				Card spadeCard = new Card(Suit.Spade, i);
+				Card diamondCard = new Card(Suit.Diamond, i);
+				Card clubCard = new Card(Suit.Club, i);
+
+				cardList.Add(heartCard);
+				cardList.Add(spadeCard);
+				cardList.Add(diamondCard);
+				cardList.Add(clubCard);
 			}
 			//シャッフル
 			DeckList = cardList.OrderBy(i => Guid.NewGuid()).ToList();
