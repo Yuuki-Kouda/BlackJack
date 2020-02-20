@@ -72,10 +72,14 @@ namespace BlackJack
 
 			//プレイヤーターン
 			PlayerTurn();
+
+			//リスタート有無がtrueなら再ゲーム
 			if (IsRestartGame) return IsRestartGame;
 
 			//ディーラーターン
 			DealerTurn();
+
+			//リスタート有無がtrueなら再ゲーム
 			if (IsRestartGame) return IsRestartGame;
 
 			//結果
@@ -256,7 +260,7 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// バーストメッセージ
+		/// バーストメッセージ表示
 		/// </summary>
 		/// <param name="user"></param>
 		private void ShowBustMessage(string player)
@@ -265,7 +269,7 @@ namespace BlackJack
 		}	
 
 		/// <summary>
-		/// 勝者、敗者メッセージ
+		/// 勝者、敗者メッセージ表示
 		/// </summary>
 		/// <param name="result"></param>
 		private void ShowResultMessage(Result result)
