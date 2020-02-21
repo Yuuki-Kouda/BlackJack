@@ -30,7 +30,8 @@ namespace BlackJack
 		/// </summary>
 		public void AttemptInitializeDeckList()
 		{
-			if (DeckList.Count < MinimumNumberOfDeck) InitializeDeckList();
+			if (DeckList.Count < DeckNumberCanStartGame) 
+				InitializeDeckList();
 		}
 
 		/// <summary>

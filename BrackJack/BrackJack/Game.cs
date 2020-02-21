@@ -91,7 +91,10 @@ namespace BlackJack
 				{
 					playerAction = ConfirmPlayerAction();
 				}
-				else break;
+				else 
+				{
+					break;
+				}
 			}
 
 			//プレイヤーがバーストしてなければディーラーターン
@@ -197,8 +200,10 @@ namespace BlackJack
 
 				inputKey = ConfirmInputKey();
 			}
-			if (inputKey == "h") return PlayerAction.Hit;
-			else return PlayerAction.Stand;
+			if (inputKey == "h") 
+				return PlayerAction.Hit;
+			else 
+				return PlayerAction.Stand;
 		}
 
 		/// <summary>
@@ -219,9 +224,11 @@ namespace BlackJack
 				inputKey = ConfirmInputKey();
 			}
 			//ゲーム終了
-			if (inputKey == "e") return false;
+			if (inputKey == "e") 
+				return false;
 			//ゲームリスタート
-			return true;
+			else 
+				return true;
 		}
 
 		/// <summary>
@@ -273,8 +280,10 @@ namespace BlackJack
 		/// </summary>
 		private void ShowPointsAndHand(Player player)
 		{
-			if (player == Player) Write("Player: ");
-			else Write("Dealer: ");
+			if (player == Player) 
+				Write("Player: ");
+			else 
+				Write("Dealer: ");
 
 			if (player == Dealer && Turn != Turn.DealerTurn)
 			{

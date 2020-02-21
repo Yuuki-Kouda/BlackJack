@@ -20,8 +20,10 @@ namespace BlackJack
 		{ 
 			get
 			{
-				if (Points > BlackJackPoints) return true;
-				else return false;
+				if (Points > BlackJackPoints) 
+					return true;
+				else 
+					return false;
 			} 
 		}
 
@@ -52,7 +54,10 @@ namespace BlackJack
 				var firstAceCard = aces.First();
 				var differenceOfBlackJackNumber = BlackJackPoints - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
 
-				if (firstAceCard.SpecialAcePoint <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = firstAceCard.SpecialAcePoint;
+				if (firstAceCard.SpecialAcePoint <= differenceOfBlackJackNumber)
+				{
+					firstAceCard.BlackJackNumber = firstAceCard.SpecialAcePoint;
+				}
 			}
 
 			Points = HandCards.Sum(card => card.BlackJackNumber);
