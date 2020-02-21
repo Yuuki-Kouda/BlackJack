@@ -15,7 +15,7 @@ namespace BlackJack
 		public List<Card> DeckList { get; set; } = new List<Card>();
 
 		//定数
-		public readonly int MinimumNumberOfDeck = 24;
+		public readonly int DeckNumberCanStartGame = 24;
 
 		/// <summary>
 		/// コンストラクタ
@@ -26,9 +26,9 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// デッキのシャッフルが必要であればシャッフルする
+		/// デッキの初期化が必要であれば初期化する
 		/// </summary>
-		public void AttemptInitializeDeckList()
+		public void InitializeDeckListIfNeeded()
 		{
 			if (DeckList.Count < DeckNumberCanStartGame) 
 				InitializeDeckList();
