@@ -15,8 +15,10 @@ namespace BlackJack
 		{
 			get
 			{
-				if (Hand.Points >= PointsDealerCanDraw) return true;
-				else return false;
+				if (Hand.Points >= PointsDealerCanDraw) 
+					return true;
+				else 
+					return false;
 			}
 		}
 

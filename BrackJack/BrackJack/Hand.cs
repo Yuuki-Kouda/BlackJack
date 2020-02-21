@@ -20,8 +20,10 @@ namespace BlackJack
 		{ 
 			get
 			{
-				if (Points > BlackJackPoints) return true;
-				else return false;
+				if (Points > BlackJackPoints) 
+					return true;
+				else 
+					return false;
 			} 
 		}
 
@@ -43,16 +45,18 @@ namespace BlackJack
 		public void CaluculatePoints()
 		{
 			var aces = HandCards.Where(card => card.Number == 1);
-
 			if (aces.Any())
 			{
 				//Aの初期化
 				aces.ToList().ForEach(ace => ace.BlackJackNumber = ace.Number);
 
 				var firstAceCard = aces.First();
-				var differenceOfBlackJackNumber = BlackJackPoints - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
-
-				if (firstAceCard.SpecialAcePoint <= differenceOfBlackJackNumber) firstAceCard.BlackJackNumber = firstAceCard.SpecialAcePoint;
+				var differenceOfBlackJackNumber 
+					= BlackJackPoints - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
+				if (firstAceCard.SpecialAcePoint <= differenceOfBlackJackNumber)
+				{
+					firstAceCard.BlackJackNumber = firstAceCard.SpecialAcePoint;
+				}
 			}
 
 			Points = HandCards.Sum(card => card.BlackJackNumber);

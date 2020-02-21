@@ -72,16 +72,14 @@ namespace BlackJack
 			//リスタート有無
 			var isRestartGame = false;
 
-			//ゲーム初期化
 			InitializeGame();
 
-			//開始ドロー
 			FirstDraw();
 
 			//プレイヤーターン
 			Turn = Turn.PlayerTurn;
-			var playerAction = ComfirmPlayerAction();
 
+			var playerAction = ConfirmPlayerAction();
 			while (playerAction == PlayerAction.Hit)
 			{
 				Player.DrawCard(Deck);
@@ -91,47 +89,45 @@ namespace BlackJack
 
 				if (!Player.Hand.IsBust)
 				{
-					playerAction = ComfirmPlayerAction();
+					playerAction = ConfirmPlayerAction();
 				}
-				else break;
+				else 
+				{
+					break;
+				}
 			}
 
-			//バースト確認
-			if (Player.Hand.IsBust)
+			//プレイヤーがバーストしてなければディーラーターン
+			if (!Player.Hand.IsBust)
 			{
-				ShowBustMessage(Player);
-				ShowResultMessage(Result.Lose);
+				Turn = Turn.DealerTurn;
 
-				isRestartGame = ComfirmRestartGame();
-				if (isRestartGame) return isRestartGame;
-			}
+				while (!Dealer.CanDraw)
+				{
+					Dealer.DrawCard(Deck);
+				}
 
-			//ディーラーターン
-			Turn = Turn.DealerTurn;
-
-			while (!Dealer.CanDraw)
-			{
-				Dealer.DrawCard(Deck);
-
-				//バースト確認
-				if (Dealer.Hand.IsBust)
+				//ディーラーがバーストしていなければ結果表示
+				if (!Dealer.Hand.IsBust)
+				{
+					ShowResult();
+				}
+				else
 				{
 					ShowPointsAndHand(Player);
 					ShowPointsAndHand(Dealer);
 
 					ShowBustMessage(Dealer);
 					ShowResultMessage(Result.Win);
-
-					isRestartGame = ComfirmRestartGame();
-					if (isRestartGame) return isRestartGame;
 				}
 			}
+			else
+			{
+				ShowBustMessage(Player);
+				ShowResultMessage(Result.Lose);
+			}
 
-			//結果確認
-			ComfirmResult();
-
-			//再ゲームするか確認
-			isRestartGame = ComfirmRestartGame();
+			isRestartGame = ConfirmRestartGame();
 			return isRestartGame;
 		}
 
@@ -151,7 +147,7 @@ namespace BlackJack
 		{
 			Player.InitializeHand();
 			Dealer.InitializeHand();
-			Deck.AttemptInitializeDeckList();
+			Deck.InitializeDeckListIfNeeded();
 			Turn = Turn.None;
 		}
 
@@ -170,74 +166,77 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// 結果確認
+		/// 結果表示
 		/// </summary>
-		private void ComfirmResult()
+		private void ShowResult()
 		{
 			ShowPointsAndHand(Player);
 			ShowPointsAndHand(Dealer);
 
 			var result = Result.None;
-
-			if (Player.Hand.Points > Dealer.Hand.Points) result = Result.Win;
-			else if (Player.Hand.Points < Dealer.Hand.Points) result = Result.Lose;
-			else result = Result.Draw;
-
+			if (Player.Hand.Points > Dealer.Hand.Points) 
+				result = Result.Win;
+			else if (Player.Hand.Points < Dealer.Hand.Points) 
+				result = Result.Lose;
+			else 
+				result = Result.Draw;
 			ShowResultMessage(result);
 		}
 
 		/// <summary>
 		/// ヒットしたかスタンドしたかを確認する
 		/// </summary>
-		private PlayerAction ComfirmPlayerAction()
+		private PlayerAction ConfirmPlayerAction()
 		{
 			var ShowText = "ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ";
-
 			WriteLine();
 			Write(ShowText);
 
-			var inputKey = ComfirmInputKey();
-
-			while (!(inputKey == "h" || inputKey == "s"))
+			var inputKey = ConfirmInputKey();
+			while (inputKey != "h" && inputKey != "s")
 			{
-				WriteLine();
 				Write(ShowText);
-				inputKey = ComfirmInputKey();
-			}
 
-			if (inputKey == "h") return PlayerAction.Hit;
-			else return PlayerAction.Stand;
+				inputKey = ConfirmInputKey();
+			}
+			if (inputKey == "h") 
+				return PlayerAction.Hit;
+			else 
+				return PlayerAction.Stand;
 		}
 
 		/// <summary>
 		/// 再ゲームするか確認する
 		/// </summary>
-		private bool ComfirmRestartGame()
+		private bool ConfirmRestartGame()
 		{
 			var ShowText = "もう一度ゲームをする場合は\"r\"、ゲームを終了する場合は\"e\"を入力してEnter ";
-
 			WriteLine();
 			Write(ShowText);
 
-			var inputKey = ComfirmInputKey();
+			var inputKey = ConfirmInputKey();
+			while (inputKey != "r" && inputKey != "e")
+			{
+				Write(ShowText);
 
-			while (!(inputKey == "r" || inputKey == "e")) inputKey = ComfirmInputKey();
-
+				inputKey = ConfirmInputKey();
+			}
 			//ゲーム終了
-			if (inputKey == "e") return false;
+			if (inputKey == "e") 
+				return false;
 			//ゲームリスタート
-			return true;
+			else 
+				return true;
 		}
 
 		/// <summary>
 		/// 入力キーを確認する
 		/// </summary>
 		/// <returns></returns>
-		private string ComfirmInputKey()
+		private string ConfirmInputKey()
 		{
 			var inputKey = ReadLine();
 			WriteLine();
-
 			return inputKey;
 		}
 
@@ -278,20 +277,20 @@ namespace BlackJack
 		/// </summary>
 		private void ShowPointsAndHand(Player player)
 		{
-			if (player == Player) Write("Player: ");
-			else Write("Dealer: ");
+			if (player == Player) 
+				Write("Player: ");
+			else 
+				Write("Dealer: ");
 
 			if (player == Dealer && Turn != Turn.DealerTurn)
 			{
 				Write($" Total:{player.Hand.HandCards.FirstOrDefault().BlackJackNumber} ");
-
 				Write($"[{player.Hand.HandCards.FirstOrDefault().Mark} {player.Hand.HandCards.FirstOrDefault().DisplayNumber}]");
 				WriteLine();
 			}
 			else
 			{
 				Write($" Total:{player.Hand.Points} ");
-
 				foreach (var card in player.Hand.HandCards)
 				{
 					Write($"[{card.Mark} {card.DisplayNumber}]");
