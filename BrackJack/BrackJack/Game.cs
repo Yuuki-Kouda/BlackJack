@@ -190,7 +190,7 @@ namespace BlackJack
 			Write(ShowText);
 
 			var inputKey = ComfirmInputKey();
-			while (!(inputKey == "h" || inputKey == "s"))
+			while (inputKey != "h" && inputKey != "s")
 			{
 				WriteLine();
 				Write(ShowText);
