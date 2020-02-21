@@ -72,10 +72,8 @@ namespace BlackJack
 			//リスタート有無
 			var isRestartGame = false;
 
-			//ゲーム初期化
 			InitializeGame();
 
-			//開始ドロー
 			FirstDraw();
 
 			//プレイヤーターン
@@ -96,10 +94,9 @@ namespace BlackJack
 				else break;
 			}
 
-			//プレイヤーがバーストしてなければ
+			//プレイヤーがバーストしてなければディーラーターン
 			if (!Player.Hand.IsBust)
 			{
-				//ディーラーターン
 				Turn = Turn.DealerTurn;
 
 				while (!Dealer.CanDraw)
@@ -107,10 +104,9 @@ namespace BlackJack
 					Dealer.DrawCard(Deck);
 				}
 
-				//ディーラーがバーストしていなければ
+				//ディーラーがバーストしていなければ結果表示
 				if (!Dealer.Hand.IsBust)
 				{
-					//結果確認
 					ComfirmResult();
 				}
 				else
@@ -128,7 +124,6 @@ namespace BlackJack
 				ShowResultMessage(Result.Lose);
 			}
 
-			//再ゲームするか確認
 			isRestartGame = ComfirmRestartGame();
 			return isRestartGame;
 		}
@@ -168,7 +163,7 @@ namespace BlackJack
 		}
 
 		/// <summary>
-		/// 結果確認
+		/// 結果表示
 		/// </summary>
 		private void ComfirmResult()
 		{
@@ -176,11 +171,12 @@ namespace BlackJack
 			ShowPointsAndHand(Dealer);
 
 			var result = Result.None;
-
-			if (Player.Hand.Points > Dealer.Hand.Points) result = Result.Win;
-			else if (Player.Hand.Points < Dealer.Hand.Points) result = Result.Lose;
-			else result = Result.Draw;
-
+			if (Player.Hand.Points > Dealer.Hand.Points) 
+				result = Result.Win;
+			else if (Player.Hand.Points < Dealer.Hand.Points) 
+				result = Result.Lose;
+			else 
+				result = Result.Draw;
 			ShowResultMessage(result);
 		}
 
@@ -190,19 +186,17 @@ namespace BlackJack
 		private PlayerAction ComfirmPlayerAction()
 		{
 			var ShowText = "ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ";
-
 			WriteLine();
 			Write(ShowText);
 
 			var inputKey = ComfirmInputKey();
-
 			while (!(inputKey == "h" || inputKey == "s"))
 			{
 				WriteLine();
 				Write(ShowText);
+
 				inputKey = ComfirmInputKey();
 			}
-
 			if (inputKey == "h") return PlayerAction.Hit;
 			else return PlayerAction.Stand;
 		}
@@ -213,7 +207,6 @@ namespace BlackJack
 		private bool ComfirmRestartGame()
 		{
 			var ShowText = "もう一度ゲームをする場合は\"r\"、ゲームを終了する場合は\"e\"を入力してEnter ";
-
 			WriteLine();
 			Write(ShowText);
 
@@ -282,14 +275,12 @@ namespace BlackJack
 			if (player == Dealer && Turn != Turn.DealerTurn)
 			{
 				Write($" Total:{player.Hand.HandCards.FirstOrDefault().BlackJackNumber} ");
-
 				Write($"[{player.Hand.HandCards.FirstOrDefault().Mark} {player.Hand.HandCards.FirstOrDefault().DisplayNumber}]");
 				WriteLine();
 			}
 			else
 			{
 				Write($" Total:{player.Hand.Points} ");
-
 				foreach (var card in player.Hand.HandCards)
 				{
 					Write($"[{card.Mark} {card.DisplayNumber}]");
