@@ -80,8 +80,8 @@ namespace BlackJack
 
 			//プレイヤーターン
 			Turn = Turn.PlayerTurn;
-			var playerAction = ComfirmPlayerAction();
 
+			var playerAction = ComfirmPlayerAction();
 			while (playerAction == PlayerAction.Hit)
 			{
 				Player.DrawCard(Deck);
@@ -96,39 +96,37 @@ namespace BlackJack
 				else break;
 			}
 
-			//バースト確認
-			if (Player.Hand.IsBust)
+			//プレイヤーがバーストしてなければ
+			if (!Player.Hand.IsBust)
 			{
-				ShowBustMessage(Player);
-				ShowResultMessage(Result.Lose);
+				//ディーラーターン
+				Turn = Turn.DealerTurn;
 
-				isRestartGame = ComfirmRestartGame();
-				if (isRestartGame) return isRestartGame;
-			}
+				while (!Dealer.CanDraw)
+				{
+					Dealer.DrawCard(Deck);
+				}
 
-			//ディーラーターン
-			Turn = Turn.DealerTurn;
-
-			while (!Dealer.CanDraw)
-			{
-				Dealer.DrawCard(Deck);
-
-				//バースト確認
-				if (Dealer.Hand.IsBust)
+				//ディーラーがバーストしていなければ
+				if (!Dealer.Hand.IsBust)
+				{
+					//結果確認
+					ComfirmResult();
+				}
+				else
 				{
 					ShowPointsAndHand(Player);
 					ShowPointsAndHand(Dealer);
 
 					ShowBustMessage(Dealer);
 					ShowResultMessage(Result.Win);
-
-					isRestartGame = ComfirmRestartGame();
-					if (isRestartGame) return isRestartGame;
 				}
 			}
-
-			//結果確認
-			ComfirmResult();
+			else
+			{
+				ShowBustMessage(Player);
+				ShowResultMessage(Result.Lose);
+			}
 
 			//再ゲームするか確認
 			isRestartGame = ComfirmRestartGame();
