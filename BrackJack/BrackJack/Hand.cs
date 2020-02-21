@@ -51,8 +51,8 @@ namespace BlackJack
 				aces.ToList().ForEach(ace => ace.BlackJackNumber = ace.Number);
 
 				var firstAceCard = aces.First();
-				var differenceOfBlackJackNumber = BlackJackPoints - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
-
+				var differenceOfBlackJackNumber 
+					= BlackJackPoints - (HandCards.Sum(card => card.BlackJackNumber) - firstAceCard.BlackJackNumber);
 				if (firstAceCard.SpecialAcePoint <= differenceOfBlackJackNumber)
 				{
 					firstAceCard.BlackJackNumber = firstAceCard.SpecialAcePoint;
