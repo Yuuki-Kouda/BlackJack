@@ -107,7 +107,7 @@ namespace BlackJack
 				//ディーラーがバーストしていなければ結果表示
 				if (!Dealer.Hand.IsBust)
 				{
-					ComfirmResult();
+					ShowResult();
 				}
 				else
 				{
@@ -165,7 +165,7 @@ namespace BlackJack
 		/// <summary>
 		/// 結果表示
 		/// </summary>
-		private void ComfirmResult()
+		private void ShowResult()
 		{
 			ShowPointsAndHand(Player);
 			ShowPointsAndHand(Dealer);
