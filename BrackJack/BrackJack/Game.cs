@@ -79,7 +79,7 @@ namespace BlackJack
 			//プレイヤーターン
 			Turn = Turn.PlayerTurn;
 
-			var playerAction = ComfirmPlayerAction();
+			var playerAction = ConfirmPlayerAction();
 			while (playerAction == PlayerAction.Hit)
 			{
 				Player.DrawCard(Deck);
@@ -89,7 +89,7 @@ namespace BlackJack
 
 				if (!Player.Hand.IsBust)
 				{
-					playerAction = ComfirmPlayerAction();
+					playerAction = ConfirmPlayerAction();
 				}
 				else break;
 			}
@@ -124,7 +124,7 @@ namespace BlackJack
 				ShowResultMessage(Result.Lose);
 			}
 
-			isRestartGame = ComfirmRestartGame();
+			isRestartGame = ConfirmRestartGame();
 			return isRestartGame;
 		}
 
@@ -183,19 +183,19 @@ namespace BlackJack
 		/// <summary>
 		/// ヒットしたかスタンドしたかを確認する
 		/// </summary>
-		private PlayerAction ComfirmPlayerAction()
+		private PlayerAction ConfirmPlayerAction()
 		{
 			var ShowText = "ヒットする場合は\"h\"、スタンドの場合は\"s\"を入力してEnter ";
 			WriteLine();
 			Write(ShowText);
 
-			var inputKey = ComfirmInputKey();
+			var inputKey = ConfirmInputKey();
 			while (inputKey != "h" && inputKey != "s")
 			{
 				WriteLine();
 				Write(ShowText);
 
-				inputKey = ComfirmInputKey();
+				inputKey = ConfirmInputKey();
 			}
 			if (inputKey == "h") return PlayerAction.Hit;
 			else return PlayerAction.Stand;
@@ -204,19 +204,19 @@ namespace BlackJack
 		/// <summary>
 		/// 再ゲームするか確認する
 		/// </summary>
-		private bool ComfirmRestartGame()
+		private bool ConfirmRestartGame()
 		{
 			var ShowText = "もう一度ゲームをする場合は\"r\"、ゲームを終了する場合は\"e\"を入力してEnter ";
 			WriteLine();
 			Write(ShowText);
 
-			var inputKey = ComfirmInputKey();
+			var inputKey = ConfirmInputKey();
 			while (inputKey != "r" && inputKey != "e")
 			{
 				WriteLine();
 				Write(ShowText);
 
-				inputKey = ComfirmInputKey();
+				inputKey = ConfirmInputKey();
 			}
 			//ゲーム終了
 			if (inputKey == "e") return false;
@@ -228,7 +228,7 @@ namespace BlackJack
 		/// 入力キーを確認する
 		/// </summary>
 		/// <returns></returns>
-		private string ComfirmInputKey()
+		private string ConfirmInputKey()
 		{
 			var inputKey = ReadLine();
 			WriteLine();
