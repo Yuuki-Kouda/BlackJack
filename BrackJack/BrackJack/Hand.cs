@@ -45,7 +45,6 @@ namespace BlackJack
 		public void CaluculatePoints()
 		{
 			var aces = HandCards.Where(card => card.Number == 1);
-
 			if (aces.Any())
 			{
 				//Aの初期化

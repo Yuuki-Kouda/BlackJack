@@ -239,7 +239,6 @@ namespace BlackJack
 		{
 			var inputKey = ReadLine();
 			WriteLine();
-
 			return inputKey;
 		}
 

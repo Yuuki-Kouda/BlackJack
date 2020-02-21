@@ -40,7 +40,6 @@ namespace BlackJack
 		public void InitializeDeckList()
 		{
 			List<Card> cardList = new List<Card>();
-
 			for (int i = 1; i <= 13; i++)
 			{
 				Card heartCard = new Card(Suit.Heart, i);
@@ -65,7 +64,6 @@ namespace BlackJack
 		{
 			var card = DeckList.FirstOrDefault();
 			DeckList.Remove(card);
-
 			return card;
 		}
 	}
