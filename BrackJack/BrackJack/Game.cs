@@ -211,9 +211,13 @@ namespace BlackJack
 			Write(ShowText);
 
 			var inputKey = ComfirmInputKey();
+			while (inputKey != "r" && inputKey != "e")
+			{
+				WriteLine();
+				Write(ShowText);
 
-			while (!(inputKey == "r" || inputKey == "e")) inputKey = ComfirmInputKey();
-
+				inputKey = ComfirmInputKey();
+			}
 			//ゲーム終了
 			if (inputKey == "e") return false;
 			//ゲームリスタート
